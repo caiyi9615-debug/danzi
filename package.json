@@ -1,6 +1,6 @@
 {
-  "name": "circuit-qiu-mimi-style-site",
-  "version": "2.0.0",
+  "name": "circuit-daily-schedule-site",
+  "version": "3.0.0",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
