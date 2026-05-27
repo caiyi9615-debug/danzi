@@ -32,27 +32,18 @@ async function supabaseRequest(endpoint, options = {}) {
 
   const text = await res.text();
   let data = null;
-
-  try {
-    data = text ? JSON.parse(text) : null;
-  } catch {
-    data = text;
-  }
+  try { data = text ? JSON.parse(text) : null; } catch { data = text; }
 
   if (!res.ok) {
     throw new Error((data && data.message) || text || `HTTP ${res.status}`);
   }
-
   return data;
 }
 
 app.post("/api/sync/pull", async (req, res) => {
   try {
     const syncKey = String(req.body.syncKey || "").trim();
-
-    if (!syncKey) {
-      return res.status(400).json({ success: false, message: "缺少同步码" });
-    }
+    if (!syncKey) return res.status(400).json({ success: false, message: "缺少同步码" });
 
     const data = await supabaseRequest(
       `circuit_study_state?sync_key_hash=eq.${encodeURIComponent(hashKey(syncKey))}&select=state,updated_at&limit=1`,
@@ -60,12 +51,7 @@ app.post("/api/sync/pull", async (req, res) => {
     );
 
     const row = Array.isArray(data) && data.length ? data[0] : null;
-
-    res.json({
-      success: true,
-      state: row ? row.state : null,
-      updated_at: row ? row.updated_at : null
-    });
+    res.json({ success: true, state: row ? row.state : null, updated_at: row ? row.updated_at : null });
   } catch (e) {
     res.status(500).json({ success: false, message: e.message || "读取失败" });
   }
@@ -76,19 +62,12 @@ app.post("/api/sync/push", async (req, res) => {
     const syncKey = String(req.body.syncKey || "").trim();
     const state = req.body.state;
 
-    if (!syncKey) {
-      return res.status(400).json({ success: false, message: "缺少同步码" });
-    }
-
-    if (!state || typeof state !== "object") {
-      return res.status(400).json({ success: false, message: "缺少打卡数据" });
-    }
+    if (!syncKey) return res.status(400).json({ success: false, message: "缺少同步码" });
+    if (!state || typeof state !== "object") return res.status(400).json({ success: false, message: "缺少打卡数据" });
 
     await supabaseRequest("circuit_study_state", {
       method: "POST",
-      headers: {
-        Prefer: "resolution=merge-duplicates"
-      },
+      headers: { Prefer: "resolution=merge-duplicates" },
       body: JSON.stringify({
         sync_key_hash: hashKey(syncKey),
         state,
@@ -102,14 +81,7 @@ app.post("/api/sync/push", async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+app.get("/", (req, res) => res.sendFile(path.join(__dirname, "public", "index.html")));
+app.get("*", (req, res) => res.sendFile(path.join(__dirname, "public", "index.html")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
-app.listen(PORT, () => {
-  console.log("circuit study site running on " + PORT);
-});
+app.listen(PORT, () => console.log("circuit qiu mimi-style site running on " + PORT));
