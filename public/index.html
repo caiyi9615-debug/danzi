@@ -96,7 +96,7 @@ input:focus,textarea:focus{border-color:var(--blue2);box-shadow:0 0 0 4px rgba(3
 <div class="stat"><div class="label">总打卡项</div><div class="value" id="totalChecks">0</div></div>
 <div class="stat"><div class="label">已完成</div><div class="value" id="doneChecks">0</div></div>
 <div class="stat"><div class="label">完成率</div><div class="value" id="rateText">0%</div></div>
-<div class="stat"><div class="label">剩余网课</div><div class="value" id="leftVideo">0分</div></div>
+<div class="stat"><div class="label">剩余网课</div><div class="value" id="leftVideo">读取中</div></div>
 </section>
 
 <section class="panel"><h2>整体进度 <span id="progressLabel" style="float:right">0%</span></h2><div class="bar"><div id="progressBar"></div></div><div class="notice" id="todayTip">今日任务会在这里提示。</div></section>
@@ -174,19 +174,63 @@ async function fetchRealDurations(){
     if(!r.ok || !d.success) throw new Error(d.message || "获取失败");
     BILI_DURATIONS = d.lessonDurations || {};
     render();
+    refreshRealDurationTexts();
   }catch(e){
     console.warn("B站真实时长获取失败：", e.message);
   }
 }
+
+
+function getRealLessonSeconds(no){
+  return Number((typeof BILI_DURATIONS !== "undefined" && BILI_DURATIONS && BILI_DURATIONS[no]) ? BILI_DURATIONS[no] : 0);
+}
+function getDayRealSeconds(d){
+  if(!d || !d.lessonNos || !d.lessonNos.length) return 0;
+  return d.lessonNos.reduce((sum,no)=>sum + getRealLessonSeconds(no), 0);
+}
+function getDayDurationText(d){
+  const sec = getDayRealSeconds(d);
+  if(sec) return formatDuration(sec);
+  return "读取中";
+}
+function getTotalRealSeconds(){
+  if(typeof BILI_DURATIONS === "undefined" || !BILI_DURATIONS) return 0;
+  return Object.values(BILI_DURATIONS).map(Number).filter(Boolean).reduce((a,b)=>a+b,0);
+}
+function getRemainingRealSeconds(){
+  const data = normalize(load());
+  const total = getTotalRealSeconds();
+  if(!total) return 0;
+  let watched = 0;
+  PLAN.forEach(d=>{
+    if(!d.lessonNos || !d.lessonNos.length) return;
+    const done = d.lessonNos.every(no => data.videos && data.videos[lessonId(no)]);
+    if(done) watched += getDayRealSeconds(d);
+  });
+  return Math.max(0, total - watched);
+}
+function refreshRealDurationTexts(){
+  document.querySelectorAll("[data-day-duration]").forEach(el=>{
+    const date = el.getAttribute("data-day-duration");
+    const d = PLAN.find(x=>x.date===date);
+    if(d) el.textContent = "网课：" + getDayDurationText(d);
+  });
+  const left = document.getElementById("leftVideo");
+  if(left){
+    const sec = getRemainingRealSeconds();
+    left.textContent = sec ? formatDuration(sec) : "读取中";
+  }
+}
+
 
 function courseHtml(d){if(!d.lessonNos||!d.lessonNos.length)return "";const data=normalize(load());const items=d.lessonNos.map(no=>{const id=lessonId(no),done=!!data.videos[id],started=data.videoStart[id]?"已开始计时":"未开始";return `<div class="lesson-item"><div class="lesson-top"><div><div class="lesson-name">课时${String(no).padStart(2,"0")} ${esc(lessonTitle(no))}</div><div class="lesson-meta">${getLessonDurationText(no)}｜${started}｜达到约90%时长可自动打卡</div></div><span class="lesson-done ${done?"ok":""}">${done?"已看完":"未完成"}</span></div><div class="lesson-actions"><button onclick="openLesson('${d.date}',${no})">去B站观看</button><button onclick="markLessonDone('${d.date}',${no})">我已看完</button></div></div>`}).join("");return `<div class="course-box"><div class="course-title">今日网课</div><div class="lesson-list">${items}</div></div>`}
 function openLesson(date,no){const data=normalize(load());data.videoStart[lessonId(no)]=Date.now();save(data);window.open(lessonUrl(no),"_blank");render();}
 function markLessonDone(date,no){const data=normalize(load());data.videos[lessonId(no)]=true;autoCheckDayVideo(data,date);save(data);render();}
 function autoCheckDayVideo(data,date){const d=PLAN.find(x=>x.date===date);if(!d||!d.lessonNos||!d.lessonNos.length)return;if(d.lessonNos.every(no=>data.videos[lessonId(no)]))data.checks[`${date}-0`]=true}
 function checkAutoVideoDone(){const data=normalize(load());let changed=false;PLAN.forEach(d=>{(d.lessonNos||[]).forEach(no=>{const id=lessonId(no);if(data.videos[id]||!data.videoStart[id])return;const elapsed=(Date.now()-Number(data.videoStart[id]))/60000;const realMin=(BILI_DURATIONS[no]||0)/60;if(elapsed>=(realMin||d.minutes||50)*0.9){data.videos[id]=true;changed=true;}});autoCheckDayVideo(data,d.date)});if(changed)localStorage.setItem(STORAGE_KEY,JSON.stringify(data));}
-function render(){addFitnessChecks();checkAutoVideoDone();const data=normalize(load()),box=dayList,today=new Date().toISOString().slice(0,10);box.innerHTML="";PLAN.forEach(d=>{const done=d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]);const card=document.createElement("article");card.className="day-card"+(d.date===today?" today":"")+(done?" done":"");card.id="day-"+d.date;const checkHtml=d.checks.map((c,i)=>`<label class="check"><input type="checkbox" data-key="${d.date}-${i}" ${data.checks[`${d.date}-${i}`]?"checked":""}><span>${esc(c)}</span></label>`).join("");card.innerHTML=`<div><div class="date">${d.show}</div><div class="weekday">${weekday(d.date)}</div><span class="type ${d.cls}">${d.type}</span></div><div><h3>${esc(d.chapter)}</h3><div class="meta"><span class="pill">重要度：${esc(d.priority)}</span><span class="pill">网课：${d.minutes}分钟</span></div><div class="time-grid"><div class="time-block"><b>上午 8:30—11:30</b><br>${esc(d.morning)}</div><div class="time-block"><b>下午 13:50—15:20</b><br>${esc(d.afternoon)}</div><div class="time-block"><b>晚上 19:00—20:20</b><br>${esc(d.night1)}</div><div class="time-block"><b>晚上 20:35—21:35</b><br>${esc(d.night2)}</div></div><div class="task"><b>健身安排：</b>15:20—17:20 健身 + 路程；力量训练按三分化走，结束后爬坡有氧：坡度12、速度4、约30分钟。完成后记得勾选“健身+爬坡有氧完成”。</div><div class="task"><b>今日主线：</b>${esc(d.task)}</div><div class="task"><b>练习/整理：</b>${esc(d.practice)}</div><div class="adjust"><b>落后调整：</b>${esc(d.adjust)}</div><div class="adjust"><b>21:35—22:00 今日回顾：</b>${esc(d.review)}</div>${courseHtml(d)}</div><div><div class="checks">${checkHtml}</div><textarea data-note="${d.date}" placeholder="写今天的错题、没听懂的点、明天要补的内容……">${esc(data.notes[d.date]||"")}</textarea></div>`;box.appendChild(card)});document.querySelectorAll("input[type=checkbox]").forEach(el=>el.addEventListener("change",e=>{const data=normalize(load());data.checks[e.target.dataset.key]=e.target.checked;save(data);updateStats();updateCardStatus();}));document.querySelectorAll("textarea").forEach(el=>el.addEventListener("input",e=>{const data=normalize(load());data.notes[e.target.dataset.note]=e.target.value;save(data);}));updateStats();initCloudInput();}
+function render(){addFitnessChecks();checkAutoVideoDone();const data=normalize(load()),box=dayList,today=new Date().toISOString().slice(0,10);box.innerHTML="";PLAN.forEach(d=>{const done=d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]);const card=document.createElement("article");card.className="day-card"+(d.date===today?" today":"")+(done?" done":"");card.id="day-"+d.date;const checkHtml=d.checks.map((c,i)=>`<label class="check"><input type="checkbox" data-key="${d.date}-${i}" ${data.checks[`${d.date}-${i}`]?"checked":""}><span>${esc(c)}</span></label>`).join("");card.innerHTML=`<div><div class="date">${d.show}</div><div class="weekday">${weekday(d.date)}</div><span class="type ${d.cls}">${d.type}</span></div><div><h3>${esc(d.chapter)}</h3><div class="meta"><span class="pill">重要度：${esc(d.priority)}</span><span class="pill" data-day-duration="${d.date}">网课：${getDayDurationText(d)}</span></div><div class="time-grid"><div class="time-block"><b>上午 8:30—11:30</b><br>${esc(d.morning)}</div><div class="time-block"><b>下午 13:50—15:20</b><br>${esc(d.afternoon)}</div><div class="time-block"><b>晚上 19:00—20:20</b><br>${esc(d.night1)}</div><div class="time-block"><b>晚上 20:35—21:35</b><br>${esc(d.night2)}</div></div><div class="task"><b>健身安排：</b>15:20—17:20 健身 + 路程；力量训练按三分化走，结束后爬坡有氧：坡度12、速度4、约30分钟。完成后记得勾选“健身+爬坡有氧完成”。</div><div class="task"><b>今日主线：</b>${esc(d.task)}</div><div class="task"><b>练习/整理：</b>${esc(d.practice)}</div><div class="adjust"><b>落后调整：</b>${esc(d.adjust)}</div><div class="adjust"><b>21:35—22:00 今日回顾：</b>${esc(d.review)}</div>${courseHtml(d)}</div><div><div class="checks">${checkHtml}</div><textarea data-note="${d.date}" placeholder="写今天的错题、没听懂的点、明天要补的内容……">${esc(data.notes[d.date]||"")}</textarea></div>`;box.appendChild(card)});document.querySelectorAll("input[type=checkbox]").forEach(el=>el.addEventListener("change",e=>{const data=normalize(load());data.checks[e.target.dataset.key]=e.target.checked;save(data);updateStats();updateCardStatus();}));document.querySelectorAll("textarea").forEach(el=>el.addEventListener("input",e=>{const data=normalize(load());data.notes[e.target.dataset.note]=e.target.value;save(data);}));updateStats();initCloudInput();refreshRealDurationTexts();}
 function updateCardStatus(){const data=normalize(load());PLAN.forEach(d=>{const el=document.getElementById("day-"+d.date);if(!el)return;el.classList.toggle("done",d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]));})}
-function updateStats(){const data=normalize(load());const total=PLAN.reduce((s,d)=>s+d.checks.length,0);let done=0,watched=0;PLAN.forEach(d=>{const all=d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]);if(all)watched+=d.minutes;d.checks.forEach((_,i)=>{if(data.checks[`${d.date}-${i}`])done++})});const rate=total?Math.round(done/total*100):0,left=Math.max(0,PLAN.reduce((s,d)=>s+d.minutes,0)-watched);totalChecks.textContent=total;doneChecks.textContent=done;rateText.textContent=rate+"%";progressLabel.textContent=rate+"%";progressBar.style.width=rate+"%";leftVideo.textContent=left+"分";const d=PLAN.find(x=>x.date===new Date().toISOString().slice(0,10));todayTip.textContent=d?`今天是${d.show}（${d.type}）：${d.chapter}。${d.task}`:"今天不在计划日期内，可以打卡下一个未完成任务。";}
+function updateStats(){const data=normalize(load());const total=PLAN.reduce((s,d)=>s+d.checks.length,0);let done=0,watched=0;PLAN.forEach(d=>{const all=d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]);if(all)watched+=d.minutes;d.checks.forEach((_,i)=>{if(data.checks[`${d.date}-${i}`])done++})});const rate=total?Math.round(done/total*100):0,leftSec=getRemainingRealSeconds();totalChecks.textContent=total;doneChecks.textContent=done;rateText.textContent=rate+"%";progressLabel.textContent=rate+"%";progressBar.style.width=rate+"%";refreshRealDurationTexts();leftVideo.textContent=leftSec?formatDuration(leftSec):"读取中";const d=PLAN.find(x=>x.date===new Date().toISOString().slice(0,10));todayTip.textContent=d?`今天是${d.show}（${d.type}）：${d.chapter}。${d.task}`:"今天不在计划日期内，可以打卡下一个未完成任务。";}
 function checkToday(){const data=normalize(load());let d=PLAN.find(x=>x.date===new Date().toISOString().slice(0,10));if(!d)d=PLAN.find(x=>!x.checks.every((_,i)=>data.checks[`${x.date}-${i}`]));if(!d)return alert("已经没有未完成任务啦。");d.checks.forEach((_,i)=>data.checks[`${d.date}-${i}`]=true);save(data);render();setTimeout(()=>document.getElementById("day-"+d.date)?.scrollIntoView({behavior:"smooth",block:"center"}),80)}
 function scrollToToday(){let el=document.getElementById("day-"+new Date().toISOString().slice(0,10));if(!el){const data=normalize(load());const n=PLAN.find(d=>!d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]));if(n)el=document.getElementById("day-"+n.date)}if(el)el.scrollIntoView({behavior:"smooth",block:"center"});else alert("没有可定位的任务。")}
 function exportData(){const blob=new Blob([JSON.stringify(normalize(load()),null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="电路原理每日复习打卡数据.json";a.click();URL.revokeObjectURL(a.href)}
