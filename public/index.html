@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>电路原理14天复习站｜邱关源1-8章</title>
+<style>
+:root{--bg:#f6f8ff;--card:#ffffff;--text:#172033;--muted:#667085;--blue:#2563eb;--cyan:#06b6d4;--orange:#f97316;--green:#16a34a;--red:#dc2626;--border:#dbeafe;--shadow:0 16px 38px rgba(30,64,175,.10);}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial,sans-serif;background:radial-gradient(circle at 0 0,rgba(37,99,235,.14),transparent 30%),radial-gradient(circle at 100% 0,rgba(6,182,212,.16),transparent 32%),var(--bg);color:var(--text);line-height:1.7}
+.wrap{max-width:1180px;margin:0 auto;padding:18px}
+.hero,.panel,.stat,.day-card{background:var(--card);border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow)}
+.hero{padding:24px;margin-bottom:16px;background:linear-gradient(135deg,#fff,#eff6ff 55%,#ecfeff);position:relative;overflow:hidden}
+.hero:after{content:"Ω";position:absolute;right:24px;top:4px;font-size:110px;color:rgba(37,99,235,.08);font-weight:900}
+h1{font-size:30px;color:#1e3a8a;margin-bottom:8px}
+.hero p,.small{color:var(--muted);font-size:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:1}
+.chip{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;border-radius:999px;padding:6px 10px;font-weight:800;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+.stat{padding:16px}.stat .label{color:var(--muted);font-size:13px}.stat .value{font-size:28px;font-weight:900;color:var(--blue)}
+.panel{padding:18px;margin:16px 0}
+.bar{height:15px;background:#e0f2fe;border-radius:999px;overflow:hidden}.bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:.25s}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+button,.file-label{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer;background:#fff;color:#1d4ed8;border:1px solid #bfdbfe;box-shadow:0 6px 14px rgba(30,64,175,.06)}
+button.primary{background:linear-gradient(90deg,var(--blue),var(--cyan));color:white;border-color:var(--blue)}
+button.danger{background:#fee2e2;color:#991b1b;border-color:#fecaca}
+input,textarea{width:100%;border:1px solid #cbd5e1;border-radius:14px;padding:11px 12px;font:inherit;background:white;outline:none}
+input:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(37,99,235,.10)}
+.cloud-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:12px}.cloud-head h2,.panel h2{color:#1e3a8a;font-size:18px;margin-bottom:10px}
+.sync-badge{white-space:nowrap;border-radius:999px;background:#eff6ff;color:#1d4ed8;padding:6px 10px;font-size:12px;font-weight:900}
+.cloud-row,.setting-row{display:grid;grid-template-columns:1.2fr auto auto auto;gap:10px}
+.setting-row{grid-template-columns:1fr auto}
+.sync-tip,.notice{margin-top:10px;background:#eff6ff;color:#1e40af;border:1px dashed #93c5fd;border-radius:14px;padding:10px;font-size:13px}
+.day-list{display:grid;gap:14px}
+.day-card{padding:16px;display:grid;grid-template-columns:150px 1fr 330px;gap:16px}
+.day-card.today{outline:3px solid var(--cyan)}.day-card.done{background:linear-gradient(135deg,#f0fdf4,#ffffff)}
+.date{font-size:22px;font-weight:900;color:#1e3a8a}.weekday{font-size:13px;color:var(--muted)}
+.type{display:inline-block;margin-top:8px;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:900;background:#dbeafe;color:#1d4ed8}
+.practice{background:#dcfce7;color:#166534}.exam{background:#fef3c7;color:#b45309}.rest{background:#f3f4f6;color:#4b5563}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.pill{font-size:12px;font-weight:800;background:#eff6ff;color:#1d4ed8;padding:4px 8px;border-radius:999px}
+.task,.adjust,.course-box{background:#f8fafc;border:1px solid #edf2f7;border-radius:14px;padding:9px 10px;margin-top:8px}
+.course-title{font-weight:900;color:#1e3a8a;margin-bottom:8px}
+.lesson-list{display:grid;gap:8px}.lesson-item{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;background:white;border:1px solid #dbeafe;border-radius:14px;padding:9px}
+.lesson-name{font-weight:900;color:#172033}.lesson-meta{font-size:12px;color:#64748b}.lesson-done{font-size:12px;font-weight:900;border-radius:999px;padding:4px 8px;background:#eff6ff;color:#1d4ed8;white-space:nowrap}.lesson-done.ok{background:#dcfce7;color:#166534}
+.lesson-actions{display:flex;gap:6px;flex-wrap:wrap;grid-column:1/-1}
+.lesson-actions button{padding:8px 10px;font-size:13px;border-radius:12px}
+.checks{display:grid;gap:8px}.check{display:flex;align-items:center;gap:8px;background:#f8fafc;border:1px solid #edf2f7;border-radius:14px;padding:9px 10px;font-weight:800;cursor:pointer}
+.check input{width:18px;height:18px;accent-color:var(--blue)}textarea{min-height:78px;margin-top:10px;resize:vertical;font-size:13px}
+.footer{text-align:center;color:#1e3a8a;font-weight:900;padding:22px}
+@media(max-width:900px){.wrap{padding:10px}.day-card{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.cloud-row,.setting-row{grid-template-columns:1fr}}
+@media print{.toolbar,.cloud-sync-panel,.setting-panel{display:none}body{background:white}.hero,.panel,.stat,.day-card{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero">
+<h1>电路原理14天复习站｜邱关源版1—8章</h1>
+<p>5.28—6.10，配合蜂考《电路》10.5小时系统学习，只学到课时十一。网课按顺序看，题目按章节集中刷，最后一天总复盘。</p>
+<div class="chips"><span class="chip">B站：BV1wffvY4EZC</span><span class="chip">只到课时11</span><span class="chip">支持换手机云同步</span><span class="chip">默认跳过P2讲义领取</span></div>
+</section>
+
+<section class="grid">
+<div class="stat"><div class="label">总打卡项</div><div class="value" id="totalChecks">0</div></div>
+<div class="stat"><div class="label">已完成</div><div class="value" id="doneChecks">0</div></div>
+<div class="stat"><div class="label">完成率</div><div class="value" id="rateText">0%</div></div>
+<div class="stat"><div class="label">剩余网课</div><div class="value" id="leftVideo">0分</div></div>
+</section>
+
+<section class="panel">
+<h2>整体进度 <span id="progressLabel" style="float:right">0%</span></h2>
+<div class="bar"><div id="progressBar"></div></div>
+<div class="notice" id="todayTip">今日任务会在这里提示。</div>
+</section>
+
+<section class="panel setting-panel">
+<h2>网课分P设置</h2>
+<div class="setting-row">
+<input id="handoutPInput" type="number" min="0" placeholder="讲义领取是第几P？本课默认填2，因为P2是讲义领取">
+<button class="primary" onclick="saveHandoutP()">保存分P设置</button>
+</div>
+<div class="sync-tip">说明：如果B站中间有“讲义领取”分P，填它的P号后，后面的课时会自动顺延。填0表示不跳过任何分P。</div>
+</section>
+
+<section class="panel cloud-sync-panel">
+<div class="cloud-head"><div><h2>云同步</h2><p class="small">换手机也能保留打卡数据：两台设备输入同一个同步码即可同步。</p></div><span id="cloudStatus" class="sync-badge">未同步</span></div>
+<div class="cloud-row">
+<input id="syncKeyInput" type="password" placeholder="输入同步码，例如 circuit520">
+<button class="primary" onclick="cloudLogin()">启用同步</button>
+<button onclick="cloudPull()">从云端恢复</button>
+<button onclick="cloudPush()">上传当前数据</button>
+</div>
+<div class="sync-tip">第一次用旧手机点“上传当前数据”；新手机输入同一个同步码后点“从云端恢复”。之后会自动同步。</div>
+</section>
+
+<div class="toolbar">
+<button class="primary" onclick="checkToday()">今日全打卡</button>
+<button onclick="scrollToToday()">定位到今天</button>
+<button onclick="exportData()">导出打卡数据</button>
+<button onclick="printPage()">打印/导出PDF</button>
+<button class="danger" onclick="resetAll()">一键清空打卡记录</button>
+</div>
+
+<section class="panel"><h2>学习策略</h2><div class="notice">学习日看网课、整理例题；刷题日集中做强关联章节；第1—4章、第7—8章优先级最高。只学到课时十一，不继续往后刷新课。</div></section>
+<section class="day-list" id="dayList"></section>
+<div class="footer">电路原理稳住，按步骤列方程就能拿分。</div>
+</div>
+
+<script>
+const STORAGE_KEY="circuit_qiuguanyuan_plan_v1";
+const BILI_BASE="https://www.bilibili.com/video/BV1wffvY4EZC/";
+const PLAN=[{"date": "2026-05-28", "show": "5.28", "type": "学习日", "cls": "study", "chapter": "第1章 电路模型和电路定律", "lessonNos": [1], "minutes": 55, "priority": "S级", "task": "看网课课时1，配合教材第1章。重点理解电路模型、电压电流参考方向、功率、KCL、KVL。", "practice": "看懂例题，手算2道KCL/KVL基础题。", "adjust": "如果听不懂参考方向，先不要往后冲，晚上专门补参考方向和功率正负。", "checks": ["看完课时1", "整理KCL/KVL笔记", "完成基础题"]}, {"date": "2026-05-29", "show": "5.29", "type": "学习日", "cls": "study", "chapter": "第2章 电阻电路的等效变换", "lessonNos": [2], "minutes": 55, "priority": "S级", "task": "看课时2，学习电阻串并联、等效电阻、分压分流、源变换。", "practice": "做等效变换和源变换基础题。", "adjust": "如果源变换不熟，后面节点/网孔会卡，优先补。", "checks": ["看完课时2", "整理等效变换步骤", "完成基础题"]}, {"date": "2026-05-30", "show": "5.30", "type": "学习日", "cls": "study", "chapter": "第3章 电阻电路的一般分析", "lessonNos": [3], "minutes": 60, "priority": "S级", "task": "看课时3，学习支路电流法、网孔电流法、节点电压法。", "practice": "重点跟做节点电压法例题。", "adjust": "时间不够时优先节点电压法，其次网孔法。", "checks": ["看完课时3", "整理节点/网孔步骤", "看懂例题"]}, {"date": "2026-05-31", "show": "5.31", "type": "刷题日", "cls": "practice", "chapter": "第1—3章集中刷题", "lessonNos": [], "minutes": 0, "priority": "S级", "task": "不看新课，集中做第1—3章题，保证基础分析方法连贯。", "practice": "建议：KCL/KVL 2题，等效变换2题，节点/网孔分析3题。", "adjust": "如果只够做一类题，优先节点电压法和源变换。", "checks": ["完成第1—3章题", "订正错题", "整理步骤模板"]}, {"date": "2026-06-01", "show": "6.1", "type": "学习日", "cls": "study", "chapter": "第4章 电路定理 上", "lessonNos": [4], "minutes": 60, "priority": "S级", "task": "看课时4，学习叠加定理、替代定理等电路定理基础。", "practice": "做叠加定理基础题。", "adjust": "叠加定理一定要会关闭独立源，受控源不能随便关。", "checks": ["看完课时4", "整理叠加定理规则", "完成例题"]}, {"date": "2026-06-02", "show": "6.2", "type": "学习日", "cls": "study", "chapter": "第4章 电路定理 下 / 第5章 运算放大器基础", "lessonNos": [5], "minutes": 60, "priority": "S级/A级", "task": "看课时5，重点戴维南/诺顿等效，兼顾运放基础。", "practice": "做戴维南等效题，练开路电压和等效电阻。", "adjust": "若时间紧，第5章运放只保基础，戴维南必须吃透。", "checks": ["看完课时5", "整理戴维南步骤", "完成戴维南题"]}, {"date": "2026-06-03", "show": "6.3", "type": "学习日", "cls": "study", "chapter": "第6章 储能元件", "lessonNos": [6], "minutes": 55, "priority": "A级", "task": "看课时6，学习电容、电感、储能公式、换路前后连续性。", "practice": "做电容电感初始值判断题。", "adjust": "初始值判断是动态电路前提，不会就先补。", "checks": ["看完课时6", "整理电容电感公式", "完成初始值题"]}, {"date": "2026-06-04", "show": "6.4", "type": "学习日", "cls": "study", "chapter": "第7章 一阶电路时域分析", "lessonNos": [7], "minutes": 60, "priority": "S级", "task": "看课时7，学习三要素法、零输入响应、零状态响应、全响应。", "practice": "跟做一阶RC/RL电路题。", "adjust": "一阶电路重点掌握三要素：初始值、稳态值、时间常数。", "checks": ["看完课时7", "整理三要素法", "完成一阶电路题"]}, {"date": "2026-06-05", "show": "6.5", "type": "刷题日", "cls": "practice", "chapter": "第4—7章集中刷题", "lessonNos": [], "minutes": 0, "priority": "S级", "task": "集中做电路定理、储能元件、一阶电路题。", "practice": "建议：戴维南2题，叠加1题，初始值1题，一阶电路2题。", "adjust": "若落后，优先戴维南和一阶三要素法。", "checks": ["完成第4—7章题", "订正错题", "整理核心模板"]}, {"date": "2026-06-06", "show": "6.6", "type": "学习日", "cls": "study", "chapter": "第7章 二阶电路/动态电路补充", "lessonNos": [8], "minutes": 55, "priority": "B级/A级", "task": "看课时8，按网课内容补动态电路后续内容。", "practice": "看懂例题即可，难题不死磕。", "adjust": "如果考试不重二阶，压缩到会判断基本形式。", "checks": ["看完课时8", "整理动态电路补充", "看懂例题"]}, {"date": "2026-06-07", "show": "6.7", "type": "学习日", "cls": "study", "chapter": "第8章 相量法基础", "lessonNos": [9], "minutes": 60, "priority": "S级", "task": "看课时9，学习正弦量、相量表示、阻抗导纳。", "practice": "练习正弦量与相量互化，计算阻抗。", "adjust": "相量法是后面交流电路基础，不会互化就先别刷难题。", "checks": ["看完课时9", "整理相量互化", "完成基础计算"]}, {"date": "2026-06-08", "show": "6.8", "type": "学习日", "cls": "study", "chapter": "第8章 正弦稳态电路分析", "lessonNos": [10], "minutes": 60, "priority": "S级", "task": "看课时10，学习用相量法分析正弦稳态电路。", "practice": "做相量法节点/网孔基础题。", "adjust": "如果计算容易乱，先统一写成复数阻抗再列方程。", "checks": ["看完课时10", "整理相量法步骤", "完成分析题"]}, {"date": "2026-06-09", "show": "6.9", "type": "学习日", "cls": "study", "chapter": "第8章 相量法综合 / 前8章收尾", "lessonNos": [11], "minutes": 60, "priority": "S级", "task": "看课时11，只学到这里。重点把第8章收尾，并回看前面薄弱点。", "practice": "做1道相量法综合题，回看戴维南/一阶错题。", "adjust": "如果相量法还不熟，6.10优先补相量和戴维南。", "checks": ["看完课时11", "完成相量综合题", "标记薄弱点"]}, {"date": "2026-06-10", "show": "6.10", "type": "综合刷题日", "cls": "exam", "chapter": "第1—8章总复盘", "lessonNos": [], "minutes": 0, "priority": "S级", "task": "不看新课，集中整理第1—8章模板并做一套综合题。", "practice": "建议：节点法、戴维南、一阶电路、相量法各至少1题。", "adjust": "考前最后不要学新课，只补错题和高频大题。", "checks": ["完成综合题", "订正错题", "整理最终公式模板"]}];
+let cloudSyncKey=localStorage.getItem("circuit_cloud_sync_key")||"";
+let cloudSyncTimer=null;
+
+function load(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||'{"checks":{},"notes":{},"videos":{},"videoStart":{},"settings":{}}')}catch{return {checks:{},notes:{},videos:{},videoStart:{},settings:{}}}}
+function normalize(d){d.checks=d.checks||{};d.notes=d.notes||{};d.videos=d.videos||{};d.videoStart=d.videoStart||{};d.settings=d.settings||{};return d}
+function save(data){localStorage.setItem(STORAGE_KEY,JSON.stringify(normalize(data)));scheduleCloudPush();}
+function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function weekday(dateStr){return ["周日","周一","周二","周三","周四","周五","周六"][new Date(dateStr+"T00:00:00").getDay()]}
+function getHandoutP(){return Number(normalize(load()).settings.handoutP||2)}
+function saveHandoutP(){const data=normalize(load());data.settings.handoutP=Number(handoutPInput.value||0);save(data);render();alert("已保存分P设置。")}
+function biliP(lessonNo){const h=getHandoutP();return h&&lessonNo>=h?lessonNo+1:lessonNo}
+function lessonId(no){return "lesson"+no}
+function lessonUrl(no){return BILI_BASE+"?p="+biliP(no)}
+
+function courseHtml(d){
+ if(!d.lessonNos||!d.lessonNos.length)return "";
+ const data=normalize(load());
+ const items=d.lessonNos.map(no=>{
+   const id=lessonId(no), done=!!data.videos[id], start=data.videoStart[id]?"已开始计时":"未开始";
+   return `<div class="lesson-item"><div><div class="lesson-name">课时${no}｜B站P${biliP(no)}</div><div class="lesson-meta">${d.minutes||""}分钟参考｜${start}｜达到约90%时长可自动打卡</div></div><span class="lesson-done ${done?"ok":""}">${done?"已看完":"未完成"}</span><div class="lesson-actions"><button onclick="openLesson('${d.date}',${no})">去B站观看</button><button onclick="markLessonDone('${d.date}',${no})">我已看完</button></div></div>`;
+ }).join("");
+ return `<div class="course-box"><div class="course-title">今日网课</div><div class="lesson-list">${items}</div></div>`;
+}
+function openLesson(date,no){const data=normalize(load());data.videoStart[lessonId(no)]=Date.now();save(data);window.open(lessonUrl(no),"_blank");render();}
+function markLessonDone(date,no){const data=normalize(load());data.videos[lessonId(no)]=true;autoCheckDayVideo(data,date);save(data);render();}
+function autoCheckDayVideo(data,date){const d=PLAN.find(x=>x.date===date);if(!d||!d.lessonNos||!d.lessonNos.length)return;if(d.lessonNos.every(no=>data.videos[lessonId(no)]))data.checks[`${date}-0`]=true}
+function checkAutoVideoDone(){
+ const data=normalize(load());let changed=false;
+ PLAN.forEach(d=>{(d.lessonNos||[]).forEach(no=>{const id=lessonId(no);if(data.videos[id]||!data.videoStart[id])return;const elapsed=(Date.now()-Number(data.videoStart[id]))/60000;if(elapsed>=(d.minutes||50)*0.9){data.videos[id]=true;changed=true;}});autoCheckDayVideo(data,d.date);});
+ if(changed)localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+}
+
+function render(){
+ checkAutoVideoDone();
+ const data=normalize(load()),box=dayList,today=new Date().toISOString().slice(0,10);box.innerHTML="";
+ handoutPInput.value=data.settings.handoutP||2;
+ PLAN.forEach(d=>{const done=d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]);const card=document.createElement("article");card.className="day-card"+(d.date===today?" today":"")+(done?" done":"");card.id="day-"+d.date;
+ const checkHtml=d.checks.map((c,i)=>`<label class="check"><input type="checkbox" data-key="${d.date}-${i}" ${data.checks[`${d.date}-${i}`]?"checked":""}><span>${esc(c)}</span></label>`).join("");
+ card.innerHTML=`<div><div class="date">${d.show}</div><div class="weekday">${weekday(d.date)}</div><span class="type ${d.cls}">${d.type}</span></div><div><h3>${esc(d.chapter)}</h3><div class="meta"><span class="pill">重要度：${esc(d.priority)}</span><span class="pill">网课：${d.minutes}分钟</span><span class="pill">${esc(d.video||"")}</span></div><div class="task"><b>今日主线：</b>${esc(d.task)}</div><div class="task"><b>练习/整理：</b>${esc(d.practice)}</div><div class="adjust"><b>落后调整：</b>${esc(d.adjust)}</div>${courseHtml(d)}</div><div><div class="checks">${checkHtml}</div><textarea data-note="${d.date}" placeholder="写今天的错题、没听懂的点、明天要补的内容……">${esc(data.notes[d.date]||"")}</textarea></div>`;
+ box.appendChild(card);});
+ document.querySelectorAll("input[type=checkbox]").forEach(el=>el.addEventListener("change",e=>{const data=normalize(load());data.checks[e.target.dataset.key]=e.target.checked;save(data);updateStats();updateCardStatus();}));
+ document.querySelectorAll("textarea").forEach(el=>el.addEventListener("input",e=>{const data=normalize(load());data.notes[e.target.dataset.note]=e.target.value;save(data);}));
+ updateStats();initCloudInput();
+}
+function updateCardStatus(){const data=normalize(load());PLAN.forEach(d=>{const el=document.getElementById("day-"+d.date);if(!el)return;el.classList.toggle("done",d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]));})}
+function updateStats(){const data=normalize(load());const total=PLAN.reduce((s,d)=>s+d.checks.length,0);let done=0,watched=0;PLAN.forEach(d=>{const all=d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]);if(all)watched+=d.minutes;d.checks.forEach((_,i)=>{if(data.checks[`${d.date}-${i}`])done++})});const rate=total?Math.round(done/total*100):0,left=Math.max(0,PLAN.reduce((s,d)=>s+d.minutes,0)-watched);totalChecks.textContent=total;doneChecks.textContent=done;rateText.textContent=rate+"%";progressLabel.textContent=rate+"%";progressBar.style.width=rate+"%";leftVideo.textContent=left+"分";const d=PLAN.find(x=>x.date===new Date().toISOString().slice(0,10));todayTip.textContent=d?`今天是${d.show}（${d.type}）：${d.chapter}。${d.task}`:"今天不在计划日期内，可以打卡下一个未完成任务。";}
+function checkToday(){const data=normalize(load());let d=PLAN.find(x=>x.date===new Date().toISOString().slice(0,10));if(!d)d=PLAN.find(x=>!x.checks.every((_,i)=>data.checks[`${x.date}-${i}`]));if(!d)return alert("已经没有未完成任务啦。");d.checks.forEach((_,i)=>data.checks[`${d.date}-${i}`]=true);save(data);render();setTimeout(()=>document.getElementById("day-"+d.date)?.scrollIntoView({behavior:"smooth",block:"center"}),80);}
+function scrollToToday(){let el=document.getElementById("day-"+new Date().toISOString().slice(0,10));if(!el){const data=normalize(load());const n=PLAN.find(d=>!d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]));if(n)el=document.getElementById("day-"+n.date)}if(el)el.scrollIntoView({behavior:"smooth",block:"center"});else alert("没有可定位的任务。")}
+function exportData(){const blob=new Blob([JSON.stringify(normalize(load()),null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="电路原理复习打卡数据.json";a.click();URL.revokeObjectURL(a.href)}
+function printPage(){window.print()}
+function resetAll(){if(confirm("确定清空所有打卡和备注吗？")){localStorage.removeItem(STORAGE_KEY);render();}}
+
+function setCloudStatus(text,ok=false){cloudStatus.textContent=text;cloudStatus.style.background=ok?"#dcfce7":"#eff6ff";cloudStatus.style.color=ok?"#166534":"#1d4ed8"}
+function getCloudKey(){const v=syncKeyInput.value.trim();if(v){cloudSyncKey=v;localStorage.setItem("circuit_cloud_sync_key",v)}return cloudSyncKey}
+function initCloudInput(){if(cloudSyncKey){syncKeyInput.value=cloudSyncKey;setCloudStatus("已启用同步码",true)}}
+async function cloudLogin(){const key=getCloudKey();if(!key)return alert("请先输入同步码。");setCloudStatus("同步码已保存",true);await cloudPull(false)}
+async function cloudPull(showAlert=true){const key=getCloudKey();if(!key)return alert("请先输入同步码。");try{setCloudStatus("正在读取云端...");const r=await fetch("/api/sync/pull",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({syncKey:key})});const d=await r.json();if(!r.ok||!d.success)throw new Error(d.message||"读取失败");if(d.state){localStorage.setItem(STORAGE_KEY,JSON.stringify(d.state));render();setCloudStatus("云端数据已恢复",true);if(showAlert)alert("已从云端恢复打卡数据。")}else{setCloudStatus("云端暂无数据");if(showAlert)alert("云端还没有数据。旧设备请先上传当前数据。")}}catch(e){setCloudStatus("同步失败");alert("云同步失败："+e.message)}}
+async function cloudPush(showAlert=true){const key=getCloudKey();if(!key)return alert("请先输入同步码。");try{setCloudStatus("正在上传云端...");const r=await fetch("/api/sync/push",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({syncKey:key,state:normalize(load())})});const d=await r.json();if(!r.ok||!d.success)throw new Error(d.message||"上传失败");setCloudStatus("已同步到云端",true);if(showAlert)alert("已上传到云端。换手机后输入同一个同步码即可恢复。")}catch(e){setCloudStatus("同步失败");if(showAlert)alert("云同步失败："+e.message)}}
+function scheduleCloudPush(){if(!cloudSyncKey)return;clearTimeout(cloudSyncTimer);cloudSyncTimer=setTimeout(()=>cloudPush(false),900)}
+render();setInterval(()=>{checkAutoVideoDone();updateStats()},60000);
+</script>
+</body>
+</html>
