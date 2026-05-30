@@ -42,3 +42,24 @@ Supabase 运行 supabase.sql。
 - 顶部“剩余网课”改为部署后按 B站真实时长动态计算
 - 每日卡片“重要度”旁边的“网课时间”改为对应课时真实时长
 - 不再显示旧估算值，例如 630分、55分钟
+
+## 长期使用与部署建议
+
+### 本地启动
+```bash
+npm install
+npm start
+```
+启动后访问 `http://localhost:3000`。
+
+### GitHub Pages / Vercel 静态部署
+- 可以直接把 `public/index.html` 作为静态页面部署。
+- 静态部署下，打卡、备注、补充任务、学习/健身分类统计会保存在浏览器 `localStorage` 中，刷新页面仍会保留。
+- 静态部署没有 Node 后端，因此云同步接口 `/api/sync/*` 和 B 站真实时长接口 `/api/bili/pages` 不可用；页面会继续使用本地数据和缓存。
+
+### Render 部署
+- 使用 `npm start` 启动 Node/Express 服务。
+- 如需云同步，请配置环境变量：
+  - `SUPABASE_URL`
+  - `SUPABASE_SERVICE_ROLE_KEY`
+- Render 部署后可使用云同步和后端 B 站分 P 时长读取。
