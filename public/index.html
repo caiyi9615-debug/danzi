@@ -5,57 +5,41 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>电路原理复习站｜每日复习+健身日程</title>
 <style>
-:root{--bg:#f6f8ff;--card:#ffffff;--text:#172033;--muted:#667085;--blue:#0f4fbf;--blue2:#2563eb;--cyan:#06b6d4;--green:#16a34a;--orange:#f97316;--red:#dc2626;--border:#b9d7ff;--soft:#eff6ff;--shadow:0 16px 38px rgba(30,64,175,.10);}
+:root{--bg:#f4f8fb;--card:#ffffff;--text:#172033;--muted:#667085;--blue:#1d4ed8;--blue2:#2563eb;--cyan:#06b6d4;--green:#16a34a;--orange:#f97316;--red:#dc2626;--border:#dbe7f5;--soft:#eef6ff;--soft2:#f8fbff;--shadow:0 18px 45px rgba(15,53,110,.10);--radius:24px;}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial,sans-serif;background:radial-gradient(circle at 0 0,rgba(37,99,235,.14),transparent 30%),radial-gradient(circle at 100% 0,rgba(6,182,212,.18),transparent 32%),var(--bg);color:var(--text);line-height:1.7}
-.wrap{max-width:1180px;margin:0 auto;padding:18px}
-.hero,.panel,.stat,.day-card{background:var(--card);border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow)}
-.hero{padding:24px;margin-bottom:16px;background:linear-gradient(135deg,#fff,#eff6ff 55%,#ecfeff);position:relative;overflow:hidden}
-.hero:after{content:"⚡";position:absolute;right:28px;top:8px;font-size:104px;color:rgba(37,99,235,.08);font-weight:900}
-h1{font-size:32px;color:#073b8e;margin-bottom:8px;position:relative;z-index:1}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial,sans-serif;background:linear-gradient(180deg,#eef6ff 0,#f7fbff 280px,#f4f8fb 100%);color:var(--text);line-height:1.72;font-size:15px}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 18px 30px}
+.hero,.panel,.stat,.day-card{background:rgba(255,255,255,.94);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+.hero{padding:28px;margin-bottom:18px;background:linear-gradient(135deg,#ffffff 0,#eff6ff 58%,#ecfeff 100%);position:relative;overflow:hidden}
+.hero:after{content:"⚡";position:absolute;right:28px;top:4px;font-size:112px;color:rgba(37,99,235,.08);font-weight:900;line-height:1}
+h1{font-size:34px;line-height:1.2;color:#0f3f86;margin-bottom:10px;position:relative;z-index:1;letter-spacing:-.5px}
 .hero p,.small{color:var(--muted);font-size:14px;position:relative;z-index:1}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:1}
-.chip{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;border-radius:999px;padding:6px 10px;font-weight:800;font-size:13px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
-.stat{padding:16px}.stat .label{color:var(--muted);font-size:13px}.stat .value{font-size:28px;font-weight:900;color:var(--blue2)}
-.panel{padding:18px;margin:16px 0}.panel h2{color:#073b8e;font-size:19px;margin-bottom:10px}
-.bar{height:15px;background:#e0f2fe;border-radius:999px;overflow:hidden}.bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--blue2),var(--cyan));transition:.25s}
-.notice{margin-top:10px;background:#eff6ff;color:#1e40af;border:1px dashed #93c5fd;border-radius:14px;padding:10px;font-size:13px}
-.schedule-table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:16px;font-size:14px}
-.schedule-table th{background:linear-gradient(90deg,#0f4fbf,#2563eb);color:white;padding:10px;text-align:center}
-.schedule-table td{border:1px solid #bfdbfe;padding:9px;background:white}
-.schedule-table td:nth-child(1){font-weight:900;color:#0f4fbf;white-space:nowrap;text-align:center}
-.schedule-table td:nth-child(2){font-weight:900;text-align:center}
-.key-points{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
-.key-points div{background:#eff6ff;border:1px solid #bfdbfe;border-radius:14px;padding:10px;font-weight:900;color:#1d4ed8;text-align:center}
-.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
-button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer;background:#fff;color:#1d4ed8;border:1px solid #bfdbfe;box-shadow:0 6px 14px rgba(30,64,175,.06)}
-button.primary{background:linear-gradient(90deg,var(--blue2),var(--cyan));color:white;border-color:var(--blue2)}button.danger{background:#fee2e2;color:#991b1b;border-color:#fecaca}
-input,textarea{width:100%;border:1px solid #cbd5e1;border-radius:14px;padding:11px 12px;font:inherit;background:white;outline:none}
-input:focus,textarea:focus{border-color:var(--blue2);box-shadow:0 0 0 4px rgba(37,99,235,.10)}
-.cloud-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:12px}
-.sync-badge{white-space:nowrap;border-radius:999px;background:#eff6ff;color:#1d4ed8;padding:6px 10px;font-size:12px;font-weight:900}
-.cloud-row{display:grid;grid-template-columns:1.4fr auto auto auto;gap:10px}
-.day-list{display:grid;gap:14px}
-.day-card{padding:16px;display:grid;grid-template-columns:150px 1fr 340px;gap:16px}
-.day-card.today{outline:3px solid var(--cyan)}.day-card.done{background:linear-gradient(135deg,#f0fdf4,#ffffff)}
-.date{font-size:22px;font-weight:900;color:#073b8e}.weekday{font-size:13px;color:var(--muted)}
-.type{display:inline-block;margin-top:8px;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:900;background:#dbeafe;color:#1d4ed8}
-.practice{background:#dcfce7;color:#166534}.summary,.exam{background:#fef3c7;color:#b45309}
-.meta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.pill{font-size:12px;font-weight:800;background:#eff6ff;color:#1d4ed8;padding:4px 8px;border-radius:999px}
-.task,.adjust,.course-box,.time-block{background:#f8fafc;border:1px solid #edf2f7;border-radius:14px;padding:9px 10px;margin-top:8px}
-.time-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.time-block b{color:#073b8e}
-.course-title{font-weight:900;color:#073b8e;margin-bottom:8px}
-.lesson-list{display:grid;gap:8px}.lesson-item{background:white;border:1px solid #dbeafe;border-radius:14px;padding:9px}
-.lesson-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.lesson-name{font-weight:900;color:#172033}.lesson-meta{font-size:12px;color:#64748b}
-.lesson-done{font-size:12px;font-weight:900;border-radius:999px;padding:4px 8px;background:#eff6ff;color:#1d4ed8;white-space:nowrap}.lesson-done.ok{background:#dcfce7;color:#166534}
-.lesson-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.lesson-actions button{padding:8px 10px;font-size:13px;border-radius:12px}
-.checks{display:grid;gap:8px}.check{display:flex;align-items:center;gap:8px;background:#f8fafc;border:1px solid #edf2f7;border-radius:14px;padding:9px 10px;font-weight:800;cursor:pointer}
-.check input{width:18px;height:18px;accent-color:var(--blue2)}textarea{min-height:78px;margin-top:10px;resize:vertical;font-size:13px}
-.footer{text-align:center;color:#073b8e;font-weight:900;padding:22px}
-@media(max-width:900px){.wrap{padding:10px}.day-card{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.cloud-row,.time-grid{grid-template-columns:1fr}.key-points{grid-template-columns:1fr 1fr}.schedule-table{font-size:12px}}
-@media print{.toolbar,.cloud-sync-panel{display:none}body{background:white}.hero,.panel,.stat,.day-card{box-shadow:none}}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;position:relative;z-index:1}
+.chip{background:#fff;color:#1d4ed8;border:1px solid #bfdbfe;border-radius:999px;padding:7px 11px;font-weight:800;font-size:13px;box-shadow:0 6px 16px rgba(37,99,235,.07)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:18px 0}
+.stat{padding:18px;position:relative;overflow:hidden}.stat:before{content:"";position:absolute;inset:0 0 auto;height:4px;background:linear-gradient(90deg,var(--blue2),var(--cyan))}.stat .label{color:var(--muted);font-size:13px;font-weight:800}.stat .value{font-size:30px;font-weight:950;color:var(--blue2);line-height:1.25;margin-top:4px}
+.panel{padding:20px;margin:18px 0}.panel h2{color:#0f3f86;font-size:20px;margin-bottom:12px;letter-spacing:-.2px}
+.bar{height:16px;background:#dff1ff;border-radius:999px;overflow:hidden;box-shadow:inset 0 1px 3px rgba(15,63,134,.08)}.bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--blue2),var(--cyan));transition:.25s;border-radius:999px}
+.notice{margin-top:12px;background:#f0f7ff;color:#1e40af;border:1px solid #bfdbfe;border-radius:16px;padding:12px 14px;font-size:14px}
+.schedule-table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:18px;font-size:14px;border:1px solid #d7e7fb;background:white}
+.schedule-table th{background:linear-gradient(90deg,#1d4ed8,#06b6d4);color:white;padding:11px;text-align:center}.schedule-table td{border-top:1px solid #e2edf8;border-right:1px solid #e2edf8;padding:10px;background:white}.schedule-table td:last-child,.schedule-table th:last-child{border-right:0}.schedule-table td:nth-child(1){font-weight:900;color:#0f4fbf;white-space:nowrap;text-align:center}.schedule-table td:nth-child(2){font-weight:900;text-align:center;color:#334155}
+.key-points{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.key-points div{background:#f0f7ff;border:1px solid #bfdbfe;border-radius:16px;padding:11px;font-weight:900;color:#1d4ed8;text-align:center}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0;position:sticky;top:8px;z-index:5;padding:8px;background:rgba(244,248,251,.78);backdrop-filter:blur(10px);border-radius:18px}
+button{min-height:44px;border:0;border-radius:14px;padding:11px 15px;font-weight:900;cursor:pointer;background:#fff;color:#1d4ed8;border:1px solid #bfdbfe;box-shadow:0 8px 18px rgba(30,64,175,.07);touch-action:manipulation;transition:transform .15s,box-shadow .15s,background .15s}
+button:hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(30,64,175,.10)}button:active{transform:translateY(0)}button.primary{background:linear-gradient(90deg,var(--blue2),var(--cyan));color:white;border-color:transparent}button.danger{background:#fff1f2;color:#b91c1c;border-color:#fecdd3}
+input,select,textarea{width:100%;min-height:44px;border:1px solid #cbd5e1;border-radius:15px;padding:12px 13px;font:inherit;background:white;outline:none;color:var(--text)}input:focus,select:focus,textarea:focus{border-color:var(--blue2);box-shadow:0 0 0 4px rgba(37,99,235,.10)}
+.cloud-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:12px}.sync-badge{white-space:nowrap;border-radius:999px;background:#eff6ff;color:#1d4ed8;padding:7px 11px;font-size:12px;font-weight:900}.cloud-row{display:grid;grid-template-columns:minmax(220px,1.4fr) auto auto auto;gap:10px;align-items:center}
+.day-list{display:grid;gap:18px}.day-card{padding:18px;display:grid;grid-template-columns:154px minmax(0,1fr) 350px;gap:18px;align-items:start;position:relative;overflow:hidden}.day-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:#bfdbfe}.day-card.today{border-color:#67e8f9;box-shadow:0 18px 50px rgba(6,182,212,.16)}.day-card.today:before{background:linear-gradient(180deg,var(--cyan),var(--blue2))}.day-card.done{background:linear-gradient(135deg,#f0fdf4,#ffffff)}.day-card.done:before{background:var(--green)}
+.day-date-panel,.day-main,.day-check-panel{min-width:0}.date{font-size:26px;font-weight:950;color:#0f3f86;line-height:1}.weekday{font-size:13px;color:var(--muted);margin-top:6px}.type{display:inline-block;margin-top:10px;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:900;background:#dbeafe;color:#1d4ed8}.practice{background:#dcfce7;color:#166534}.summary,.exam{background:#fef3c7;color:#b45309}.meta{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.pill{font-size:12px;font-weight:900;background:#eff6ff;color:#1d4ed8;padding:5px 9px;border-radius:999px;border:1px solid #dbeafe}
+.day-main h2{font-size:21px;line-height:1.35;color:#102a56;margin-bottom:10px;letter-spacing:-.2px}.section-title{display:flex;align-items:center;gap:8px;margin:12px 0 8px;color:#0f3f86;font-weight:950;font-size:14px}.section-title:before{content:"";width:8px;height:8px;border-radius:99px;background:linear-gradient(135deg,var(--blue2),var(--cyan));box-shadow:0 0 0 4px rgba(37,99,235,.10)}
+.task,.adjust,.course-box,.time-block,.fitness-card,.note-card{background:var(--soft2);border:1px solid #e2edf8;border-radius:16px;padding:11px 12px;margin-top:8px}.time-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}.time-block b{color:#0f3f86}.fitness-card{background:#f0fdf4;border-color:#bbf7d0;color:#14532d}.task b,.adjust b,.fitness-card b{color:#0f3f86}.adjust{background:#fffaf0;border-color:#fdecc8;color:#7c4a03}
+.course-box{background:#f6fbff}.course-title{font-weight:950;color:#0f3f86;margin-bottom:8px}.lesson-list{display:grid;gap:9px}.lesson-item{background:white;border:1px solid #dbeafe;border-radius:15px;padding:10px}.lesson-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.lesson-name{font-weight:950;color:#172033}.lesson-meta{font-size:12px;color:#64748b}.lesson-done{font-size:12px;font-weight:900;border-radius:999px;padding:5px 9px;background:#eff6ff;color:#1d4ed8;white-space:nowrap}.lesson-done.ok{background:#dcfce7;color:#166534}.lesson-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.lesson-actions button{padding:9px 11px;font-size:13px;border-radius:12px;min-height:38px}
+.overview-grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:12px}.overview-card{background:var(--soft2);border:1px solid #e2edf8;border-radius:18px;padding:14px}.overview-card strong{display:block;color:#0f3f86;margin-bottom:6px}.overview-card .big{font-size:28px;font-weight:950;color:var(--blue2);line-height:1.2}.overview-card.fitness{background:#f0fdf4;border-color:#bbf7d0}.overview-card.fitness .big{color:#16a34a}.overview-list{display:grid;gap:6px;color:#475569;font-size:14px}.check-panel-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px;color:#0f3f86;font-weight:950}.checks{display:grid;gap:9px}.check{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:9px;background:#f8fafc;border:1px solid #e2edf8;border-radius:15px;padding:10px 11px;font-weight:850;cursor:pointer}.check.fitness-check{background:#f0fdf4;border-color:#bbf7d0}.check input{width:20px;height:20px;accent-color:var(--blue2)}.check-title{min-width:0;overflow-wrap:anywhere}.task-actions{display:flex;gap:6px;margin-left:auto}.task-actions button{min-height:34px;padding:6px 9px;font-size:12px;border-radius:10px;box-shadow:none}.add-task-box{margin-top:12px;padding-top:12px;border-top:1px dashed #cbd5e1}.add-task-row{display:grid;grid-template-columns:120px 1fr auto;gap:8px;margin-top:8px}.add-task-row button{padding:9px 12px;border-radius:12px;min-height:44px}textarea{min-height:96px;margin-top:10px;resize:vertical;font-size:14px}.footer{text-align:center;color:#0f3f86;font-weight:900;padding:24px}
+@media(max-width:1060px){.day-card{grid-template-columns:135px minmax(0,1fr);}.day-check-panel{grid-column:1/-1}.cloud-row{grid-template-columns:1fr 1fr}.cloud-row input{grid-column:1/-1}.overview-grid{grid-template-columns:1fr 1fr}.toolbar{position:static}}
+@media(max-width:760px){body{font-size:15px;background:#f5f9ff}.wrap{padding:12px 10px 24px}.hero,.panel,.stat,.day-card{border-radius:20px}.hero{padding:20px 16px}.hero:after{font-size:76px;right:12px;top:8px}h1{font-size:26px;padding-right:50px}.hero p{font-size:13px}.chip{font-size:12px;padding:7px 10px}.grid{grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:15px}.stat .value{font-size:24px}.panel{padding:15px;margin:14px 0}.schedule-table{font-size:12px;display:block;overflow-x:auto;white-space:nowrap}.key-points{grid-template-columns:1fr 1fr}.toolbar{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0;background:transparent}.toolbar button{width:100%;padding:12px 10px}.cloud-head{display:grid}.cloud-row{grid-template-columns:1fr}.day-list{gap:14px}.day-card{grid-template-columns:1fr;padding:15px;gap:12px}.day-card:before{width:4px}.date{font-size:24px}.meta{margin-bottom:0}.day-main h2{font-size:19px}.time-grid{grid-template-columns:1fr}.lesson-top{display:grid}.lesson-done{justify-self:start}.lesson-actions{display:grid;grid-template-columns:1fr 1fr}.lesson-actions button{width:100%;min-height:42px}.check{grid-template-columns:auto minmax(0,1fr);align-items:start}.task-actions{grid-column:1/-1;margin-left:29px;width:calc(100% - 29px);display:grid;grid-template-columns:1fr 1fr}.task-actions button{min-height:38px}.overview-grid{grid-template-columns:1fr}.add-task-row{grid-template-columns:1fr}.add-task-row button{width:100%}textarea{min-height:110px}.sync-badge{justify-self:start}}
+@media(max-width:390px){.grid,.toolbar,.key-points{grid-template-columns:1fr}h1{font-size:24px}.lesson-actions{grid-template-columns:1fr}.task-actions{grid-template-columns:1fr}.check{padding:10px}.schedule-table{font-size:11px}}
+@media print{.toolbar,.cloud-sync-panel,.task-actions,.add-task-box{display:none}body{background:white}.hero,.panel,.stat,.day-card{box-shadow:none}.day-card{break-inside:avoid}}
 </style>
 </head>
 <body>
@@ -96,8 +80,13 @@ input:focus,textarea:focus{border-color:var(--blue2);box-shadow:0 0 0 4px rgba(3
 <div class="stat"><div class="label">总打卡项</div><div class="value" id="totalChecks">0</div></div>
 <div class="stat"><div class="label">已完成</div><div class="value" id="doneChecks">0</div></div>
 <div class="stat"><div class="label">完成率</div><div class="value" id="rateText">0%</div></div>
+<div class="stat"><div class="label">本周完成率</div><div class="value" id="weekRateText">0%</div></div>
+<div class="stat"><div class="label">学习完成率</div><div class="value" id="studyRateText">0%</div></div>
+<div class="stat"><div class="label">健身完成率</div><div class="value" id="fitnessRateText">0%</div></div>
 <div class="stat"><div class="label">剩余网课</div><div class="value" id="leftVideo">读取中</div></div>
 </section>
+
+<section class="panel"><h2>今日概览</h2><div class="overview-grid"><div class="overview-card"><strong id="todayOverviewTitle">今日任务</strong><div class="overview-list" id="todayOverviewList">今日任务会在这里提示。</div></div><div class="overview-card"><strong>今日学习进度</strong><div class="big" id="todayStudyRate">0%</div><div class="small" id="todayStudyCount">0 / 0 项</div></div><div class="overview-card fitness"><strong>今日健身打卡</strong><div class="big" id="todayFitnessRate">0%</div><div class="small" id="todayFitnessCount">0 / 0 项</div></div></div></section>
 
 <section class="panel"><h2>整体进度 <span id="progressLabel" style="float:right">0%</span></h2><div class="bar"><div id="progressBar"></div></div><div class="notice" id="todayTip">今日任务会在这里提示。</div></section>
 
@@ -116,133 +105,497 @@ input:focus,textarea:focus{border-color:var(--blue2);box-shadow:0 0 0 4px rgba(3
 
 <script>
 const STORAGE_KEY="circuit_daily_schedule_mimi_style_v1";
+const BILI_CACHE_KEY="circuit_bili_durations_v1";
+const CLOUD_KEY_STORAGE="circuit_cloud_sync_key";
 const BILI_BASE="https://www.bilibili.com/video/BV1wffvY4EZC/";
 const LESSON_TITLES={
-1:"电路模型和电路定律",
-2:"电阻电路的等效变换",
-3:"电阻电路的一般分析（一）",
-4:"电阻电路的一般分析（二）",
-5:"电路定理（一）",
-6:"电路定理（二）",
-7:"含有理想运算放大器的电阻电路",
-8:"储能元件",
-9:"一阶电路与二阶电路的时域分析（一）",
-10:"一阶电路与二阶电路的时域分析（二）",
-11:"相量法"
+  1:"电路模型和电路定律",
+  2:"电阻电路的等效变换",
+  3:"电阻电路的一般分析（一）",
+  4:"电阻电路的一般分析（二）",
+  5:"电路定理（一）",
+  6:"电路定理（二）",
+  7:"含有理想运算放大器的电阻电路",
+  8:"储能元件",
+  9:"一阶电路与二阶电路的时域分析（一）",
+  10:"一阶电路与二阶电路的时域分析（二）",
+  11:"相量法"
 };
 
 const PLAN=[{"date": "2026-05-28", "show": "5.28", "type": "学习日", "cls": "study", "chapter": "第1章 电路模型和电路定律", "lessonNos": [1], "minutes": 55, "priority": "S级", "morning": "看课时01，学习电路模型、电压电流参考方向、功率、KCL、KVL。上午重点吃透参考方向和功率正负。", "afternoon": "整理第1章笔记：KCL/KVL、功率吸收与发出、常见单位和符号。做2道基础例题。", "night1": "刷KCL/KVL、电压电流参考方向、功率计算题。", "night2": "背第1章公式和判断规则，整理今日错题。", "review": "写下：参考方向是否会判断？功率正负是否会算？KCL/KVL方程是否会列？", "task": "掌握电路基本变量、参考方向、功率、KCL、KVL。", "practice": "KCL/KVL基础题2道，功率正负判断1道。", "adjust": "如果参考方向没搞懂，不要硬往后推，先把电压电流方向和功率吸收/发出补会。", "checks": ["上午网课完成", "下午笔记/例题完成", "晚上刷题完成", "今日回顾完成"]}, {"date": "2026-05-29", "show": "5.29", "type": "学习日", "cls": "study", "chapter": "第2章 电阻电路的等效变换", "lessonNos": [2], "minutes": 55, "priority": "S级", "morning": "看课时02，学习电阻串并联、等效电阻、分压分流、电源等效变换。", "afternoon": "整理等效电阻、分压分流、电压源/电流源互换步骤，画出步骤模板。", "night1": "刷等效变换题、源变换题、分压分流题。", "night2": "背源变换方向规则，整理错题。", "review": "写下：源变换方向有没有弄反？分压分流是否能直接套？", "task": "掌握电阻等效、分压分流、电源等效变换。", "practice": "等效电阻2题，源变换2题，分压分流2题。", "adjust": "源变换是后面电路定理和分析题基础，卡住就优先补源变换。", "checks": ["上午网课完成", "下午笔记/例题完成", "晚上刷题完成", "今日回顾完成"]}, {"date": "2026-05-30", "show": "5.30", "type": "学习日", "cls": "study", "chapter": "第3章 电阻电路的一般分析（一）", "lessonNos": [3], "minutes": 60, "priority": "S级", "morning": "看课时03，学习支路电流法、节点电压法的基本思路。重点看怎么列方程。", "afternoon": "整理节点电压法步骤：选参考点、设节点电压、列KCL、解方程。", "night1": "做节点电压法基础题，训练列方程。", "night2": "回看错题，标记不会列方程的原因。", "review": "写下：节点电压法第一步是什么？什么时候用KCL？", "task": "掌握电阻电路一般分析入门，重点节点电压法。", "practice": "节点电压法基础题2道。", "adjust": "如果方程列不出来，先回到KCL/KVL，不要只背公式。", "checks": ["上午网课完成", "下午笔记/例题完成", "晚上刷题完成", "今日回顾完成"]}, {"date": "2026-05-31", "show": "5.31", "type": "学习日", "cls": "study", "chapter": "第3章 电阻电路的一般分析（二）", "lessonNos": [4], "minutes": 60, "priority": "S级", "morning": "看课时04，继续学习节点电压法、网孔电流法、回路法。", "afternoon": "整理节点法和网孔法对比表，明确什么时候用节点法更省事。", "night1": "节点法 + 网孔法混合刷题。", "night2": "背节点法/网孔法列方程模板，整理错题。", "review": "写下：节点法和网孔法各自适合什么电路？", "task": "掌握节点法、网孔法并能列方程。", "practice": "节点法1题，网孔法1题，综合题1题。", "adjust": "如果时间不够，优先节点电压法，因为考试更常用。", "checks": ["上午网课完成", "下午笔记/例题完成", "晚上刷题完成", "今日回顾完成"]}, {"date": "2026-06-01", "show": "6.1", "type": "刷题日", "cls": "practice", "chapter": "第1—3章集中刷题", "lessonNos": [], "minutes": 0, "priority": "S级", "morning": "集中做第1—3章综合题：KCL/KVL、等效变换、源变换、节点法。", "afternoon": "订正上午错题，按错误类型分类：方向错、源变换错、方程错。", "night1": "补刷节点电压法和源变换薄弱题。", "night2": "整理第1—3章步骤模板和公式表。", "review": "写下：第1—3章最容易错的3个点。", "task": "不看新课，把基础分析方法刷顺。", "practice": "KCL/KVL 2题，等效变换2题，电源变换2题，节点/网孔分析各2题。", "adjust": "如果只够做一类，优先节点电压法和源变换。", "checks": ["上午刷题完成", "下午订正完成", "晚上补题完成", "模板整理完成"]}, {"date": "2026-06-02", "show": "6.2", "type": "学习日", "cls": "study", "chapter": "第4章 电路定理（一）", "lessonNos": [5], "minutes": 60, "priority": "S级", "morning": "看课时05，学习叠加定理、替代定理、戴维南定理基本思路。", "afternoon": "整理叠加定理和戴维南定理步骤，特别是独立源和受控源处理。", "night1": "做叠加定理题、简单戴维南题。", "night2": "背电路定理规则，整理错题。", "review": "写下：独立电压源/电流源分别怎么置零？受控源怎么办？", "task": "掌握叠加定理和戴维南定理基本框架。", "practice": "叠加定理1题，戴维南入门题1—2题。", "adjust": "受控源不能随便关，戴维南一定要按步骤来。", "checks": ["上午网课完成", "下午笔记/例题完成", "晚上刷题完成", "今日回顾完成"]}, {"date": "2026-06-03", "show": "6.3", "type": "学习日", "cls": "study", "chapter": "第4章 电路定理（二）", "lessonNos": [6], "minutes": 60, "priority": "S级", "morning": "看课时06，继续戴维南、诺顿、最大功率传输。", "afternoon": "完整整理戴维南解题模板：找端口、开路电压、等效电阻、接回负载。", "night1": "集中做戴维南/诺顿等效题。", "night2": "背戴维南标准步骤，整理错题。", "review": "写下：戴维南求等效电阻时独立源如何处理？", "task": "掌握戴维南/诺顿等效和最大功率传输。", "practice": "戴维南等效题2道，诺顿/最大功率传输1题。", "adjust": "第4章是高频大题，动态电路可压缩，戴维南不能压缩。", "checks": ["上午网课完成", "下午笔记/例题完成", "晚上刷题完成", "今日回顾完成"]}, {"date": "2026-06-04", "show": "6.4", "type": "学习日", "cls": "study", "chapter": "第5章 含有运算放大器的电阻电路", "lessonNos": [7], "minutes": 50, "priority": "A级", "morning": "看课时07，学习理想运放、虚短、虚断、基础运放电路。", "afternoon": "整理虚短虚断条件，反相/同相运放基础公式。", "night1": "做运放基础题，不死磕复杂综合题。", "night2": "回顾第4章戴维南错题，避免遗忘。", "review": "写下：虚短和虚断分别是什么意思？", "task": "掌握理想运放基本分析。", "practice": "运放基础题1—2道。", "adjust": "如果时间紧，只保留虚短虚断和基础反相/同相题。", "checks": ["上午网课完成", "下午笔记/例题完成", "晚上刷题完成", "今日回顾完成"]}, {"date": "2026-06-05", "show": "6.5", "type": "学习日", "cls": "study", "chapter": "第6章 储能元件", "lessonNos": [8], "minutes": 50, "priority": "A级", "morning": "看课时08，学习电容、电感、电压电流关系、储能公式。", "afternoon": "整理电容电感连续性：电容电压不能突变，电感电流不能突变。", "night1": "做初始值判断题、电容电感基础计算题。", "night2": "背储能元件公式，整理错题。", "review": "写下：换路瞬间哪些量连续？哪些可能突变？", "task": "掌握电容、电感和初始值判断。", "practice": "初始值判断题2道，基础计算题2道。", "adjust": "初始值判断是一阶电路前提，不会就先补。", "checks": ["上午网课完成", "下午笔记/例题完成", "晚上刷题完成", "今日回顾完成"]}, {"date": "2026-06-06", "show": "6.6", "type": "学习日", "cls": "study", "chapter": "第7章 一阶电路与二阶电路的时域分析（一）", "lessonNos": [9], "minutes": 60, "priority": "S级", "morning": "看课时09，学习一阶电路、零输入响应、零状态响应、全响应。", "afternoon": "整理三要素法：初始值、稳态值、时间常数。", "night1": "做RC/RL一阶电路题。", "night2": "背三要素法模板，整理错题。", "review": "写下：三要素法三个要素分别怎么求？", "task": "掌握一阶电路三要素法。", "practice": "一阶电路题2道。", "adjust": "三要素法必须掌握：初始值、稳态值、时间常数。", "checks": ["上午网课完成", "下午笔记/例题完成", "晚上刷题完成", "今日回顾完成"]}, {"date": "2026-06-07", "show": "6.7", "type": "学习日", "cls": "study", "chapter": "第7章 一阶电路与二阶电路的时域分析（二）", "lessonNos": [10], "minutes": 60, "priority": "A级", "morning": "看课时10，继续动态电路内容，补二阶电路相关概念。", "afternoon": "整理一阶电路常见题型，二阶电路看懂基本形式即可。", "night1": "刷一阶电路题，二阶只看基础例题。", "night2": "回顾储能元件和初始值判断。", "review": "写下：一阶电路题最容易错在哪一步？", "task": "巩固动态电路，优先一阶，二阶不死磕。", "practice": "一阶电路2题，二阶基础例题1题。", "adjust": "如果考试不重二阶，可以压缩；优先保证一阶三要素。", "checks": ["上午网课完成", "下午笔记/例题完成", "晚上刷题完成", "今日回顾完成"]}, {"date": "2026-06-08", "show": "6.8", "type": "学习日", "cls": "study", "chapter": "第8章 相量法", "lessonNos": [11], "minutes": 60, "priority": "S级", "morning": "看课时11，只学到这里。学习正弦量、相量表示、阻抗、导纳。", "afternoon": "整理相量法公式：正弦量与相量互化、阻抗、导纳。", "night1": "做正弦量与相量互化、阻抗计算题。", "night2": "背相量法公式，整理第8章错题。", "review": "写下：相量互化和阻抗计算是否会做？", "task": "掌握相量法基础和第8章核心公式。", "practice": "相量互化题2道，阻抗计算题2道。", "adjust": "相量法是第8章核心，不会互化就先别刷难题。", "checks": ["上午网课完成", "下午笔记/例题完成", "晚上刷题完成", "今日回顾完成"]}, {"date": "2026-06-09", "show": "6.9", "type": "刷题日", "cls": "practice", "chapter": "第4—8章集中刷题", "lessonNos": [], "minutes": 0, "priority": "S级", "morning": "集中做第4—8章题：戴维南、一阶电路、相量法优先。", "afternoon": "订正错题，补戴维南、一阶电路、相量法薄弱点。", "night1": "继续刷高频题：戴维南、一阶、相量。", "night2": "整理第4—8章公式和大题步骤。", "review": "写下：第4—8章最需要补的两个题型。", "task": "集中做第4—8章题，重点电路定理、一阶电路、相量法。", "practice": "戴维南2题，一阶电路2题，相量法2题，运放/储能基础各1题。", "adjust": "如果时间不够，优先戴维南、一阶电路、相量法。", "checks": ["上午刷题完成", "下午订正完成", "晚上补题完成", "模板整理完成"]}, {"date": "2026-06-10", "show": "6.10", "type": "综合整理日", "cls": "summary", "chapter": "邱关源1—8章总复盘", "lessonNos": [], "minutes": 0, "priority": "S级", "morning": "按章节快速复盘公式和方法：KCL/KVL、源变换、节点法、戴维南、一阶、相量。", "afternoon": "做一套综合题或模拟题，按考试节奏完成。", "night1": "订正综合题，回看错题本。", "night2": "只看公式、步骤模板，不再学新内容。", "review": "写下：考试前最后要看的公式和错题。", "task": "总复盘第1—8章，查漏补缺。", "practice": "节点法、戴维南、一阶电路、相量法各至少1题。", "adjust": "最后一天不要学新课，只做高频题和错题。", "checks": ["上午复盘完成", "下午综合题完成", "晚上错题完成", "最终模板完成"]}];
-let cloudSyncKey=localStorage.getItem("circuit_cloud_sync_key")||"";
+let cloudSyncKey=localStorage.getItem(CLOUD_KEY_STORAGE)||"";
 let cloudSyncTimer=null;
+let BILI_DURATIONS=loadDurationCache();
+let biliDurationsLoaded=Object.keys(BILI_DURATIONS).length>0;
+
+const els={
+  dayList:document.getElementById("dayList"),
+  totalChecks:document.getElementById("totalChecks"),
+  doneChecks:document.getElementById("doneChecks"),
+  rateText:document.getElementById("rateText"),
+  weekRateText:document.getElementById("weekRateText"),
+  studyRateText:document.getElementById("studyRateText"),
+  fitnessRateText:document.getElementById("fitnessRateText"),
+  todayOverviewTitle:document.getElementById("todayOverviewTitle"),
+  todayOverviewList:document.getElementById("todayOverviewList"),
+  todayStudyRate:document.getElementById("todayStudyRate"),
+  todayStudyCount:document.getElementById("todayStudyCount"),
+  todayFitnessRate:document.getElementById("todayFitnessRate"),
+  todayFitnessCount:document.getElementById("todayFitnessCount"),
+  leftVideo:document.getElementById("leftVideo"),
+  progressLabel:document.getElementById("progressLabel"),
+  progressBar:document.getElementById("progressBar"),
+  todayTip:document.getElementById("todayTip"),
+  syncKeyInput:document.getElementById("syncKeyInput"),
+  cloudStatus:document.getElementById("cloudStatus")
+};
 
 function addFitnessChecks(){
   PLAN.forEach(d=>{
-    if(d.type !== "休息日" && !d.checks.includes("健身+爬坡有氧完成")){
+    if(d.type!=="休息日" && !d.checks.includes("健身+爬坡有氧完成")){
       d.checks.push("健身+爬坡有氧完成");
     }
   });
 }
+addFitnessChecks();
 
-function load(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{"checks":{},"notes":{},"videos":{},"videoStart":{}}')}catch{return {checks:{},notes:{},videos:{},videoStart:{}}}}
-function normalize(d){d.checks=d.checks||{};d.notes=d.notes||{};d.videos=d.videos||{};d.videoStart=d.videoStart||{};return d}
-function save(data){localStorage.setItem(STORAGE_KEY,JSON.stringify(normalize(data)));scheduleCloudPush();}
+function defaultState(){return {checks:{},notes:{},videos:{},videoStart:{},customTasks:{},taskEdits:{},hiddenTasks:{}}}
+function load(){
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY);
+    return normalize(raw?JSON.parse(raw):defaultState());
+  }catch(e){
+    return defaultState();
+  }
+}
+function normalize(data){
+  const d=(data && typeof data==="object")?data:defaultState();
+  d.checks=(d.checks && typeof d.checks==="object")?d.checks:{};
+  d.notes=(d.notes && typeof d.notes==="object")?d.notes:{};
+  d.videos=(d.videos && typeof d.videos==="object")?d.videos:{};
+  d.videoStart=(d.videoStart && typeof d.videoStart==="object")?d.videoStart:{};
+  d.customTasks=(d.customTasks && typeof d.customTasks==="object")?d.customTasks:{};
+  d.taskEdits=(d.taskEdits && typeof d.taskEdits==="object")?d.taskEdits:{};
+  d.hiddenTasks=(d.hiddenTasks && typeof d.hiddenTasks==="object")?d.hiddenTasks:{};
+  return d;
+}
+function save(data,{sync=true}={}){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(normalize(data)));
+  if(sync) scheduleCloudPush();
+}
+function loadDurationCache(){
+  try{return JSON.parse(localStorage.getItem(BILI_CACHE_KEY)||"{}")}catch(e){return {}}
+}
+function saveDurationCache(data){localStorage.setItem(BILI_CACHE_KEY,JSON.stringify(data||{}))}
 function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function getTodayString(date=new Date()){
+  const y=date.getFullYear();
+  const m=String(date.getMonth()+1).padStart(2,"0");
+  const d=String(date.getDate()).padStart(2,"0");
+  return `${y}-${m}-${d}`;
+}
 function weekday(dateStr){return ["周日","周一","周二","周三","周四","周五","周六"][new Date(dateStr+"T00:00:00").getDay()]}
 function biliP(no){return no===1?1:no+1}
 function lessonTitle(no){return LESSON_TITLES[no]||("课时"+String(no).padStart(2,"0"))}
 function lessonId(no){return "lesson"+no}
 function lessonUrl(no){return BILI_BASE+"?p="+biliP(no)}
-
-let BILI_DURATIONS = {};
+function taskKey(date,index){return `${date}-${index}`}
+function customTaskKey(date,id){return `${date}-custom-${id}`}
+function getTaskKind(taskOrLabel){
+  if(taskOrLabel && typeof taskOrLabel==="object" && taskOrLabel.kind) return taskOrLabel.kind;
+  const label=String(taskOrLabel && taskOrLabel.label ? taskOrLabel.label : taskOrLabel || "");
+  return /健身|有氧|爬坡|力量|训练|跑步|运动/.test(label)?"fitness":"study";
+}
+function rate(done,total){return total?Math.round(done/total*100):0}
+function countTasks(tasks,data,kind){
+  const filtered=kind?tasks.filter(task=>task.kind===kind):tasks;
+  return {total:filtered.length,done:filtered.filter(task=>!!data.checks[task.key]).length};
+}
+function getWeekRange(todayStr=getTodayString()){
+  const today=new Date(todayStr+"T00:00:00");
+  const day=today.getDay()||7;
+  const start=new Date(today);
+  start.setDate(today.getDate()-day+1);
+  const end=new Date(start);
+  end.setDate(start.getDate()+6);
+  return {start:getTodayString(start),end:getTodayString(end)};
+}
+function getDayTasks(day,data=normalize(load())){
+  const edits=data.taskEdits[day.date]||{};
+  const hidden=data.hiddenTasks[day.date]||{};
+  const tasks=[];
+  day.checks.forEach((label,index)=>{
+    if(hidden[index]) return;
+    const text=edits[index]||label;
+    tasks.push({key:taskKey(day.date,index),label:text,type:"base",index,kind:getTaskKind(text)});
+  });
+  (data.customTasks[day.date]||[]).forEach(task=>{
+    if(task && task.id && task.text){
+      tasks.push({key:customTaskKey(day.date,task.id),label:task.text,type:"custom",id:task.id,kind:getTaskKind(task)});
+    }
+  });
+  return tasks;
+}
+function isDayDone(day,data=normalize(load())){
+  const tasks=getDayTasks(day,data);
+  return tasks.length>0 && tasks.every(task=>!!data.checks[task.key]);
+}
 function formatDuration(sec){
-  sec = Number(sec || 0);
-  if(!sec) return "正在获取真实时长";
-  const h = Math.floor(sec / 3600);
-  const m = Math.floor((sec % 3600) / 60);
-  const s = Math.floor(sec % 60);
+  sec=Number(sec||0);
+  if(!sec) return biliDurationsLoaded?"0分0秒":"正在获取真实时长";
+  const h=Math.floor(sec/3600);
+  const m=Math.floor((sec%3600)/60);
+  const s=Math.floor(sec%60);
   if(h) return `${h}小时${m}分${s}秒`;
   return `${m}分${s}秒`;
 }
-function getLessonDurationText(no){
-  const sec = BILI_DURATIONS[no];
-  return formatDuration(sec);
-}
+function getLessonDurationText(no){return formatDuration(BILI_DURATIONS[no])}
 async function fetchRealDurations(){
   try{
-    const r = await fetch("/api/bili/pages");
-    const d = await r.json();
-    if(!r.ok || !d.success) throw new Error(d.message || "获取失败");
-    BILI_DURATIONS = d.lessonDurations || {};
+    const r=await fetch("/api/bili/pages");
+    const d=await r.json();
+    if(!r.ok || !d.success) throw new Error(d.message||"获取失败");
+    BILI_DURATIONS=d.lessonDurations||{};
+    biliDurationsLoaded=true;
+    saveDurationCache(BILI_DURATIONS);
     render();
-    refreshRealDurationTexts();
   }catch(e){
-    console.warn("B站真实时长获取失败：", e.message);
+    biliDurationsLoaded=Object.keys(BILI_DURATIONS).length>0;
+    refreshRealDurationTexts();
   }
 }
-
-
-function getRealLessonSeconds(no){
-  return Number((typeof BILI_DURATIONS !== "undefined" && BILI_DURATIONS && BILI_DURATIONS[no]) ? BILI_DURATIONS[no] : 0);
-}
-function getDayRealSeconds(d){
-  if(!d || !d.lessonNos || !d.lessonNos.length) return 0;
-  return d.lessonNos.reduce((sum,no)=>sum + getRealLessonSeconds(no), 0);
-}
-function getDayDurationText(d){
-  const sec = getDayRealSeconds(d);
-  if(sec) return formatDuration(sec);
-  return "读取中";
-}
-function getTotalRealSeconds(){
-  if(typeof BILI_DURATIONS === "undefined" || !BILI_DURATIONS) return 0;
-  return Object.values(BILI_DURATIONS).map(Number).filter(Boolean).reduce((a,b)=>a+b,0);
-}
+function getRealLessonSeconds(no){return Number(BILI_DURATIONS && BILI_DURATIONS[no] ? BILI_DURATIONS[no] : 0)}
+function getDayRealSeconds(day){return (!day.lessonNos||!day.lessonNos.length)?0:day.lessonNos.reduce((sum,no)=>sum+getRealLessonSeconds(no),0)}
+function getDayDurationText(day){const sec=getDayRealSeconds(day);return sec?formatDuration(sec):(biliDurationsLoaded?"0分0秒":"读取中")}
+function getTotalRealSeconds(){return Object.values(BILI_DURATIONS||{}).map(Number).filter(Boolean).reduce((a,b)=>a+b,0)}
 function getRemainingRealSeconds(){
-  const data = normalize(load());
-  const total = getTotalRealSeconds();
+  const data=normalize(load());
+  const total=getTotalRealSeconds();
   if(!total) return 0;
-  let watched = 0;
-  PLAN.forEach(d=>{
-    if(!d.lessonNos || !d.lessonNos.length) return;
-    const done = d.lessonNos.every(no => data.videos && data.videos[lessonId(no)]);
-    if(done) watched += getDayRealSeconds(d);
+  let watched=0;
+  PLAN.forEach(day=>{
+    if(!day.lessonNos||!day.lessonNos.length) return;
+    if(day.lessonNos.every(no=>data.videos[lessonId(no)])) watched+=getDayRealSeconds(day);
   });
-  return Math.max(0, total - watched);
+  return Math.max(0,total-watched);
 }
 function refreshRealDurationTexts(){
   document.querySelectorAll("[data-day-duration]").forEach(el=>{
-    const date = el.getAttribute("data-day-duration");
-    const d = PLAN.find(x=>x.date===date);
-    if(d) el.textContent = "网课：" + getDayDurationText(d);
+    const day=PLAN.find(x=>x.date===el.getAttribute("data-day-duration"));
+    if(day) el.textContent="网课："+getDayDurationText(day);
   });
-  const left = document.getElementById("leftVideo");
-  if(left){
-    const sec = getRemainingRealSeconds();
-    left.textContent = sec ? formatDuration(sec) : "读取中";
+  if(els.leftVideo){
+    const sec=getRemainingRealSeconds();
+    els.leftVideo.textContent=(biliDurationsLoaded||sec)?formatDuration(sec):"读取中";
   }
 }
-
-
-function courseHtml(d){if(!d.lessonNos||!d.lessonNos.length)return "";const data=normalize(load());const items=d.lessonNos.map(no=>{const id=lessonId(no),done=!!data.videos[id],started=data.videoStart[id]?"已开始计时":"未开始";return `<div class="lesson-item"><div class="lesson-top"><div><div class="lesson-name">课时${String(no).padStart(2,"0")} ${esc(lessonTitle(no))}</div><div class="lesson-meta">${getLessonDurationText(no)}｜${started}｜达到约90%时长可自动打卡</div></div><span class="lesson-done ${done?"ok":""}">${done?"已看完":"未完成"}</span></div><div class="lesson-actions"><button onclick="openLesson('${d.date}',${no})">去B站观看</button><button onclick="markLessonDone('${d.date}',${no})">我已看完</button></div></div>`}).join("");return `<div class="course-box"><div class="course-title">今日网课</div><div class="lesson-list">${items}</div></div>`}
-function openLesson(date,no){const data=normalize(load());data.videoStart[lessonId(no)]=Date.now();save(data);window.open(lessonUrl(no),"_blank");render();}
-function markLessonDone(date,no){const data=normalize(load());data.videos[lessonId(no)]=true;autoCheckDayVideo(data,date);save(data);render();}
-function autoCheckDayVideo(data,date){const d=PLAN.find(x=>x.date===date);if(!d||!d.lessonNos||!d.lessonNos.length)return;if(d.lessonNos.every(no=>data.videos[lessonId(no)]))data.checks[`${date}-0`]=true}
-function checkAutoVideoDone(){const data=normalize(load());let changed=false;PLAN.forEach(d=>{(d.lessonNos||[]).forEach(no=>{const id=lessonId(no);if(data.videos[id]||!data.videoStart[id])return;const elapsed=(Date.now()-Number(data.videoStart[id]))/60000;const realMin=(BILI_DURATIONS[no]||0)/60;if(elapsed>=(realMin||d.minutes||50)*0.9){data.videos[id]=true;changed=true;}});autoCheckDayVideo(data,d.date)});if(changed)localStorage.setItem(STORAGE_KEY,JSON.stringify(data));}
-function render(){addFitnessChecks();checkAutoVideoDone();const data=normalize(load()),box=dayList,today=new Date().toISOString().slice(0,10);box.innerHTML="";PLAN.forEach(d=>{const done=d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]);const card=document.createElement("article");card.className="day-card"+(d.date===today?" today":"")+(done?" done":"");card.id="day-"+d.date;const checkHtml=d.checks.map((c,i)=>`<label class="check"><input type="checkbox" data-key="${d.date}-${i}" ${data.checks[`${d.date}-${i}`]?"checked":""}><span>${esc(c)}</span></label>`).join("");card.innerHTML=`<div><div class="date">${d.show}</div><div class="weekday">${weekday(d.date)}</div><span class="type ${d.cls}">${d.type}</span></div><div><h3>${esc(d.chapter)}</h3><div class="meta"><span class="pill">重要度：${esc(d.priority)}</span><span class="pill" data-day-duration="${d.date}">网课：${getDayDurationText(d)}</span></div><div class="time-grid"><div class="time-block"><b>上午 8:30—11:30</b><br>${esc(d.morning)}</div><div class="time-block"><b>下午 13:50—15:20</b><br>${esc(d.afternoon)}</div><div class="time-block"><b>晚上 19:00—20:20</b><br>${esc(d.night1)}</div><div class="time-block"><b>晚上 20:35—21:35</b><br>${esc(d.night2)}</div></div><div class="task"><b>健身安排：</b>15:20—17:20 健身 + 路程；力量训练按三分化走，结束后爬坡有氧：坡度12、速度4、约30分钟。完成后记得勾选“健身+爬坡有氧完成”。</div><div class="task"><b>今日主线：</b>${esc(d.task)}</div><div class="task"><b>练习/整理：</b>${esc(d.practice)}</div><div class="adjust"><b>落后调整：</b>${esc(d.adjust)}</div><div class="adjust"><b>21:35—22:00 今日回顾：</b>${esc(d.review)}</div>${courseHtml(d)}</div><div><div class="checks">${checkHtml}</div><textarea data-note="${d.date}" placeholder="写今天的错题、没听懂的点、明天要补的内容……">${esc(data.notes[d.date]||"")}</textarea></div>`;box.appendChild(card)});document.querySelectorAll("input[type=checkbox]").forEach(el=>el.addEventListener("change",e=>{const data=normalize(load());data.checks[e.target.dataset.key]=e.target.checked;save(data);updateStats();updateCardStatus();}));document.querySelectorAll("textarea").forEach(el=>el.addEventListener("input",e=>{const data=normalize(load());data.notes[e.target.dataset.note]=e.target.value;save(data);}));updateStats();initCloudInput();refreshRealDurationTexts();}
-function updateCardStatus(){const data=normalize(load());PLAN.forEach(d=>{const el=document.getElementById("day-"+d.date);if(!el)return;el.classList.toggle("done",d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]));})}
-function updateStats(){const data=normalize(load());const total=PLAN.reduce((s,d)=>s+d.checks.length,0);let done=0,watched=0;PLAN.forEach(d=>{const all=d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]);if(all)watched+=d.minutes;d.checks.forEach((_,i)=>{if(data.checks[`${d.date}-${i}`])done++})});const rate=total?Math.round(done/total*100):0,leftSec=getRemainingRealSeconds();totalChecks.textContent=total;doneChecks.textContent=done;rateText.textContent=rate+"%";progressLabel.textContent=rate+"%";progressBar.style.width=rate+"%";refreshRealDurationTexts();leftVideo.textContent=leftSec?formatDuration(leftSec):"读取中";const d=PLAN.find(x=>x.date===new Date().toISOString().slice(0,10));todayTip.textContent=d?`今天是${d.show}（${d.type}）：${d.chapter}。${d.task}`:"今天不在计划日期内，可以打卡下一个未完成任务。";}
-function checkToday(){const data=normalize(load());let d=PLAN.find(x=>x.date===new Date().toISOString().slice(0,10));if(!d)d=PLAN.find(x=>!x.checks.every((_,i)=>data.checks[`${x.date}-${i}`]));if(!d)return alert("已经没有未完成任务啦。");d.checks.forEach((_,i)=>data.checks[`${d.date}-${i}`]=true);save(data);render();setTimeout(()=>document.getElementById("day-"+d.date)?.scrollIntoView({behavior:"smooth",block:"center"}),80)}
-function scrollToToday(){let el=document.getElementById("day-"+new Date().toISOString().slice(0,10));if(!el){const data=normalize(load());const n=PLAN.find(d=>!d.checks.every((_,i)=>data.checks[`${d.date}-${i}`]));if(n)el=document.getElementById("day-"+n.date)}if(el)el.scrollIntoView({behavior:"smooth",block:"center"});else alert("没有可定位的任务。")}
-function exportData(){const blob=new Blob([JSON.stringify(normalize(load()),null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="电路原理每日复习打卡数据.json";a.click();URL.revokeObjectURL(a.href)}
-function printPage(){window.print()}function resetAll(){if(confirm("确定清空所有打卡和备注吗？")){localStorage.removeItem(STORAGE_KEY);render();}}
-function setCloudStatus(text,ok=false){cloudStatus.textContent=text;cloudStatus.style.background=ok?"#dcfce7":"#eff6ff";cloudStatus.style.color=ok?"#166534":"#1d4ed8"}
-function getCloudKey(){const v=syncKeyInput.value.trim();if(v){cloudSyncKey=v;localStorage.setItem("circuit_cloud_sync_key",v)}return cloudSyncKey}
-function initCloudInput(){if(cloudSyncKey){syncKeyInput.value=cloudSyncKey;setCloudStatus("已启用同步码",true)}}
-async function cloudLogin(){const key=getCloudKey();if(!key)return alert("请先输入同步码。");setCloudStatus("同步码已保存",true);await cloudPull(false)}
-async function cloudPull(showAlert=true){const key=getCloudKey();if(!key)return alert("请先输入同步码。");try{setCloudStatus("正在读取云端...");const r=await fetch("/api/sync/pull",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({syncKey:key})});const d=await r.json();if(!r.ok||!d.success)throw new Error(d.message||"读取失败");if(d.state){localStorage.setItem(STORAGE_KEY,JSON.stringify(d.state));render();setCloudStatus("云端数据已恢复",true);if(showAlert)alert("已从云端恢复打卡数据。")}else{setCloudStatus("云端暂无数据");if(showAlert)alert("云端还没有数据。旧设备请先上传当前数据。")}}catch(e){setCloudStatus("同步失败");alert("云同步失败："+e.message)}}
-async function cloudPush(showAlert=true){const key=getCloudKey();if(!key)return alert("请先输入同步码。");try{setCloudStatus("正在上传云端...");const r=await fetch("/api/sync/push",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({syncKey:key,state:normalize(load())})});const d=await r.json();if(!r.ok||!d.success)throw new Error(d.message||"上传失败");setCloudStatus("已同步到云端",true);if(showAlert)alert("已上传到云端。换手机后输入同一个同步码即可恢复。")}catch(e){setCloudStatus("同步失败");if(showAlert)alert("云同步失败："+e.message)}}
-function scheduleCloudPush(){if(!cloudSyncKey)return;clearTimeout(cloudSyncTimer);cloudSyncTimer=setTimeout(()=>cloudPush(false),900)}
-render();fetchRealDurations();setInterval(()=>{checkAutoVideoDone();updateStats()},60000);
+function courseHtml(day){
+  if(!day.lessonNos||!day.lessonNos.length) return "";
+  const data=normalize(load());
+  const items=day.lessonNos.map(no=>{
+    const id=lessonId(no),done=!!data.videos[id],started=data.videoStart[id]?"已开始计时":"未开始";
+    return `<div class="lesson-item"><div class="lesson-top"><div><div class="lesson-name">课时${String(no).padStart(2,"0")} ${esc(lessonTitle(no))}</div><div class="lesson-meta">${getLessonDurationText(no)}｜${started}｜达到约90%时长可自动打卡</div></div><span class="lesson-done ${done?"ok":""}">${done?"已完成":"未完成"}</span></div><div class="lesson-actions"><button type="button" data-open-lesson="${day.date}|${no}">打开课程</button><button type="button" data-mark-lesson="${day.date}|${no}">标记完成</button></div></div>`;
+  }).join("");
+  return `<div class="course-box"><div class="course-title">网课安排</div><div class="lesson-list">${items}</div></div>`;
+}
+function openLesson(date,no){
+  const data=normalize(load());
+  data.videoStart[lessonId(no)]=Date.now();
+  save(data);
+  window.open(lessonUrl(no),"_blank","noopener");
+  render();
+}
+function markLessonDone(date,no){
+  const data=normalize(load());
+  data.videos[lessonId(no)]=true;
+  autoCheckDayVideo(data,date);
+  save(data);
+  render();
+}
+function autoCheckDayVideo(data,date){
+  const day=PLAN.find(x=>x.date===date);
+  if(!day||!day.lessonNos||!day.lessonNos.length) return;
+  if(day.lessonNos.every(no=>data.videos[lessonId(no)])) data.checks[taskKey(date,0)]=true;
+}
+function checkAutoVideoDone(){
+  const data=normalize(load());
+  let changed=false;
+  PLAN.forEach(day=>{
+    (day.lessonNos||[]).forEach(no=>{
+      const id=lessonId(no);
+      if(data.videos[id]||!data.videoStart[id]) return;
+      const elapsed=(Date.now()-Number(data.videoStart[id]))/60000;
+      const realMin=(BILI_DURATIONS[no]||0)/60;
+      if(elapsed>=(realMin||day.minutes||50)*0.9){data.videos[id]=true;changed=true;}
+    });
+    autoCheckDayVideo(data,day.date);
+  });
+  if(changed) save(data);
+}
+function taskControlsHtml(task,day){
+  const idValue=task.type==="custom"?task.id:task.index;
+  return `<div class="task-actions"><button type="button" data-edit-task="${day.date}|${task.type}|${idValue}">修改</button><button type="button" data-delete-task="${day.date}|${task.type}|${idValue}">删除</button></div>`;
+}
+function render(){
+  checkAutoVideoDone();
+  const data=normalize(load());
+  const today=getTodayString();
+  els.dayList.innerHTML="";
+  PLAN.forEach(day=>{
+    const done=isDayDone(day,data);
+    const card=document.createElement("article");
+    card.className="day-card"+(day.date===today?" today":"")+(done?" done":"");
+    card.id="day-"+day.date;
+    const tasks=getDayTasks(day,data);
+    const checkHtml=tasks.map(task=>`<div class="check ${task.kind==="fitness"?"fitness-check":""}"><input type="checkbox" data-key="${task.key}" ${data.checks[task.key]?"checked":""}><span class="check-title">${esc(task.label)}</span>${taskControlsHtml(task,day)}</div>`).join("");
+    card.innerHTML=`<div class="day-date-panel"><div class="date">${esc(day.show)}</div><div class="weekday">${weekday(day.date)}｜${esc(day.date)}</div><span class="type ${esc(day.cls)}">${esc(day.type)}</span><div class="meta"><span class="pill">${esc(day.priority)}</span><span class="pill" data-day-duration="${day.date}">网课：${getDayDurationText(day)}</span></div></div><div class="day-main"><h2>${esc(day.chapter)}</h2><div class="section-title">今日任务</div><div class="task"><b>今日主线：</b>${esc(day.task)}</div><div class="task"><b>练习/整理：</b>${esc(day.practice)}</div><div class="section-title">学习安排</div><div class="time-grid"><div class="time-block"><b>上午 8:30—11:30</b><br>${esc(day.morning)}</div><div class="time-block"><b>下午 13:50—15:20</b><br>${esc(day.afternoon)}</div><div class="time-block"><b>晚上 19:00—20:20</b><br>${esc(day.night1)}</div><div class="time-block"><b>晚上 20:35—21:35</b><br>${esc(day.night2)}</div></div><div class="section-title">健身打卡</div><div class="fitness-card"><b>健身安排：</b>15:20—17:20 健身 + 路程；力量训练按三分化走，结束后爬坡有氧：坡度12、速度4、约30分钟。</div><div class="adjust"><b>落后调整：</b>${esc(day.adjust)}</div><div class="adjust"><b>21:35—22:00 今日回顾：</b>${esc(day.review)}</div>${courseHtml(day)}</div><div class="day-check-panel"><div class="check-panel-title"><span>学习进度</span><span>${done?"已完成":"待打卡"}</span></div><div class="checks">${checkHtml}</div><div class="add-task-box"><div class="section-title">补充任务</div><div class="add-task-row"><select data-new-task-kind="${day.date}"><option value="study">学习任务</option><option value="fitness">健身任务</option></select><input data-new-task="${day.date}" placeholder="给这一天添加临时任务"><button type="button" data-add-task="${day.date}">添加任务</button></div></div><textarea data-note="${day.date}" placeholder="写今天的错题、没听懂的点、明天要补的内容……">${esc(data.notes[day.date]||"")}</textarea></div>`;
+    els.dayList.appendChild(card);
+  });
+  bindDynamicEvents();
+  updateStats();
+  initCloudInput();
+  refreshRealDurationTexts();
+}
+function bindDynamicEvents(){
+  document.querySelectorAll("input[type=checkbox][data-key]").forEach(el=>el.addEventListener("change",e=>{
+    const data=normalize(load());
+    data.checks[e.target.dataset.key]=e.target.checked;
+    save(data);
+    updateStats();
+    updateCardStatus();
+  }));
+  document.querySelectorAll("textarea[data-note]").forEach(el=>el.addEventListener("input",e=>{
+    const data=normalize(load());
+    data.notes[e.target.dataset.note]=e.target.value;
+    save(data);
+  }));
+  document.querySelectorAll("[data-add-task]").forEach(btn=>btn.addEventListener("click",()=>addTask(btn.dataset.addTask)));
+  document.querySelectorAll("[data-edit-task]").forEach(btn=>btn.addEventListener("click",()=>{
+    const [date,type,id]=btn.dataset.editTask.split("|");
+    editTask(date,type,id);
+  }));
+  document.querySelectorAll("[data-delete-task]").forEach(btn=>btn.addEventListener("click",()=>{
+    const [date,type,id]=btn.dataset.deleteTask.split("|");
+    deleteTask(date,type,id);
+  }));
+  document.querySelectorAll("[data-open-lesson]").forEach(btn=>btn.addEventListener("click",()=>{
+    const [date,no]=btn.dataset.openLesson.split("|");
+    openLesson(date,Number(no));
+  }));
+  document.querySelectorAll("[data-mark-lesson]").forEach(btn=>btn.addEventListener("click",()=>{
+    const [date,no]=btn.dataset.markLesson.split("|");
+    markLessonDone(date,Number(no));
+  }));
+}
+function updateCardStatus(){
+  const data=normalize(load());
+  PLAN.forEach(day=>{
+    const el=document.getElementById("day-"+day.date);
+    if(el) el.classList.toggle("done",isDayDone(day,data));
+  });
+}
+function updateStats(){
+  const data=normalize(load());
+  const allTasks=PLAN.flatMap(day=>getDayTasks(day,data));
+  const all=countTasks(allTasks,data);
+  const study=countTasks(allTasks,data,"study");
+  const fitness=countTasks(allTasks,data,"fitness");
+  const week=getWeekRange();
+  const weekTasks=PLAN.filter(day=>day.date>=week.start && day.date<=week.end).flatMap(day=>getDayTasks(day,data));
+  const weekCount=countTasks(weekTasks,data);
+  const overallRate=rate(all.done,all.total);
+  els.totalChecks.textContent=all.total;
+  els.doneChecks.textContent=all.done;
+  els.rateText.textContent=overallRate+"%";
+  els.weekRateText.textContent=rate(weekCount.done,weekCount.total)+"%";
+  els.studyRateText.textContent=rate(study.done,study.total)+"%";
+  els.fitnessRateText.textContent=rate(fitness.done,fitness.total)+"%";
+  els.progressLabel.textContent=overallRate+"%";
+  els.progressBar.style.width=overallRate+"%";
+  refreshRealDurationTexts();
+  updateTodayOverview(data);
+}
+function updateTodayOverview(data=normalize(load())){
+  let day=PLAN.find(x=>x.date===getTodayString());
+  if(!day) day=PLAN.find(x=>!isDayDone(x,data));
+  if(!day){
+    els.todayTip.textContent="已经没有未完成任务啦。";
+    els.todayOverviewTitle.textContent="今日概览";
+    els.todayOverviewList.textContent="计划内任务已全部完成，可以复盘或休息。";
+    els.todayStudyRate.textContent="100%";
+    els.todayStudyCount.textContent="学习任务已完成";
+    els.todayFitnessRate.textContent="100%";
+    els.todayFitnessCount.textContent="健身任务已完成";
+    return;
+  }
+  const tasks=getDayTasks(day,data);
+  const study=countTasks(tasks,data,"study");
+  const fitness=countTasks(tasks,data,"fitness");
+  const undone=tasks.filter(task=>!data.checks[task.key]).slice(0,4);
+  els.todayTip.textContent=`今天是${day.show}（${day.type}）：${day.chapter}。${day.task}`;
+  els.todayOverviewTitle.textContent=`${day.show} ${day.chapter}`;
+  els.todayOverviewList.innerHTML=undone.length?undone.map(task=>`<div>${task.kind==="fitness"?"🏃":"📘"} ${esc(task.label)}</div>`).join(""):"<div>今日任务已完成，记得复盘错题。</div>";
+  els.todayStudyRate.textContent=rate(study.done,study.total)+"%";
+  els.todayStudyCount.textContent=`${study.done} / ${study.total} 项`;
+  els.todayFitnessRate.textContent=rate(fitness.done,fitness.total)+"%";
+  els.todayFitnessCount.textContent=`${fitness.done} / ${fitness.total} 项`;
+}
+function addTask(date){
+  const input=document.querySelector(`[data-new-task="${date}"]`);
+  const kindEl=document.querySelector(`[data-new-task-kind="${date}"]`);
+  const text=(input&&input.value||"").trim();
+  const kind=kindEl&&kindEl.value==="fitness"?"fitness":"study";
+  if(!text) return alert("请先输入任务内容。");
+  const data=normalize(load());
+  data.customTasks[date]=data.customTasks[date]||[];
+  data.customTasks[date].push({id:String(Date.now())+Math.random().toString(16).slice(2),text,kind});
+  save(data);
+  render();
+}
+function editTask(date,type,id){
+  const data=normalize(load());
+  let oldText="";
+  if(type==="custom"){
+    const task=(data.customTasks[date]||[]).find(x=>x.id===id);
+    oldText=task?task.text:"";
+  }else{
+    const day=PLAN.find(x=>x.date===date);
+    oldText=(data.taskEdits[date]&&data.taskEdits[date][id])||(day&&day.checks[Number(id)])||"";
+  }
+  const text=prompt("修改任务内容：",oldText);
+  if(text===null) return;
+  const next=text.trim();
+  if(!next) return alert("任务内容不能为空。");
+  if(type==="custom"){
+    const task=(data.customTasks[date]||[]).find(x=>x.id===id);
+    if(task) task.text=next;
+  }else{
+    data.taskEdits[date]=data.taskEdits[date]||{};
+    data.taskEdits[date][id]=next;
+  }
+  save(data);
+  render();
+}
+function deleteTask(date,type,id){
+  if(!confirm("确定删除这个任务吗？对应打卡记录也会移除。")) return;
+  const data=normalize(load());
+  if(type==="custom"){
+    data.customTasks[date]=(data.customTasks[date]||[]).filter(task=>task.id!==id);
+    delete data.checks[customTaskKey(date,id)];
+  }else{
+    data.hiddenTasks[date]=data.hiddenTasks[date]||{};
+    data.hiddenTasks[date][id]=true;
+    delete data.checks[taskKey(date,id)];
+  }
+  save(data);
+  render();
+}
+function checkToday(){
+  const data=normalize(load());
+  let day=PLAN.find(x=>x.date===getTodayString());
+  if(!day) day=PLAN.find(x=>!isDayDone(x,data));
+  if(!day) return alert("已经没有未完成任务啦。");
+  getDayTasks(day,data).forEach(task=>{data.checks[task.key]=true;});
+  save(data);
+  render();
+  setTimeout(()=>document.getElementById("day-"+day.date)?.scrollIntoView({behavior:"smooth",block:"center"}),80);
+}
+function scrollToToday(){
+  let el=document.getElementById("day-"+getTodayString());
+  if(!el){
+    const data=normalize(load());
+    const next=PLAN.find(day=>!isDayDone(day,data));
+    if(next) el=document.getElementById("day-"+next.date);
+  }
+  if(el) el.scrollIntoView({behavior:"smooth",block:"center"});
+  else alert("没有可定位的任务。");
+}
+function exportData(){
+  const blob=new Blob([JSON.stringify(normalize(load()),null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="电路原理每日复习打卡数据.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function printPage(){window.print()}
+function resetAll(){
+  if(confirm("确定清空所有打卡、任务修改和备注吗？同步码会保留。")){
+    localStorage.removeItem(STORAGE_KEY);
+    render();
+  }
+}
+function setCloudStatus(text,ok=false){
+  els.cloudStatus.textContent=text;
+  els.cloudStatus.style.background=ok?"#dcfce7":"#eff6ff";
+  els.cloudStatus.style.color=ok?"#166534":"#1d4ed8";
+}
+function getCloudKey(){
+  const value=els.syncKeyInput.value.trim();
+  if(value){
+    cloudSyncKey=value;
+    localStorage.setItem(CLOUD_KEY_STORAGE,value);
+  }
+  return cloudSyncKey;
+}
+function initCloudInput(){
+  if(cloudSyncKey){
+    els.syncKeyInput.value=cloudSyncKey;
+    setCloudStatus("已启用同步码",true);
+  }
+}
+async function cloudLogin(){
+  const key=getCloudKey();
+  if(!key) return alert("请先输入同步码。");
+  setCloudStatus("同步码已保存",true);
+  await cloudPull(false);
+}
+async function cloudPull(showAlert=true){
+  const key=getCloudKey();
+  if(!key) return alert("请先输入同步码。");
+  try{
+    setCloudStatus("正在读取云端...");
+    const r=await fetch("/api/sync/pull",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({syncKey:key})});
+    const d=await r.json();
+    if(!r.ok||!d.success) throw new Error(d.message||"读取失败");
+    if(d.state){
+      save(normalize(d.state),{sync:false});
+      render();
+      setCloudStatus("云端数据已恢复",true);
+      if(showAlert) alert("已从云端恢复打卡数据。");
+    }else{
+      setCloudStatus("云端暂无数据");
+      if(showAlert) alert("云端还没有数据。旧设备请先上传当前数据。");
+    }
+  }catch(e){
+    setCloudStatus("同步失败");
+    if(showAlert) alert("云同步失败："+e.message);
+  }
+}
+async function cloudPush(showAlert=true){
+  const key=getCloudKey();
+  if(!key) return alert("请先输入同步码。");
+  try{
+    setCloudStatus("正在上传云端...");
+    const r=await fetch("/api/sync/push",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({syncKey:key,state:normalize(load())})});
+    const d=await r.json();
+    if(!r.ok||!d.success) throw new Error(d.message||"上传失败");
+    setCloudStatus("已同步到云端",true);
+    if(showAlert) alert("已上传到云端。换手机后输入同一个同步码即可恢复。");
+  }catch(e){
+    setCloudStatus("同步失败");
+    if(showAlert) alert("云同步失败："+e.message);
+  }
+}
+function scheduleCloudPush(){
+  if(!cloudSyncKey) return;
+  clearTimeout(cloudSyncTimer);
+  cloudSyncTimer=setTimeout(()=>cloudPush(false),900);
+}
+Object.assign(window,{checkToday,scrollToToday,exportData,printPage,resetAll,cloudLogin,cloudPull,cloudPush});
+render();
+fetchRealDurations();
+setInterval(()=>{checkAutoVideoDone();updateStats();},60000);
 </script>
 </body>
 </html>
