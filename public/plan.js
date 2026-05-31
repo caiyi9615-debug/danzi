@@ -1151,13 +1151,184 @@ window.CIRCUIT_PLAN=[
 ];
 
 (function applyExtendedPlan(){
+  const GAOSHU_URL="https://pc.vkbrother.com/#/layout/player?courseId=1719375269467_777d4890-8beb-4875-8569-9c031fc2e2b9";
+  const LINEAR_URL="https://pc.vkbrother.com/#/layout/player?courseId=822&date=1780211240256";
+  const PHYSICS_URL="https://www.bilibili.com/cheese/play/ss655321602?bsource=link_copy";
+  const PHYSICS_EXTRA_URL="https://www.bilibili.com/video/BV1G4wqz7EpN/?share_source=copy_web&vd_source=ec2f99ae8aa5b390c958387df1b0d10b";
+  const TEXTBOOK_SOURCE="textbook";
+
+  function course(subject,title,durationSeconds,url,source="bilibili",kind="网课辅助",optional=false){
+    return {subject,title,url:url||"",durationSeconds:durationSeconds ?? null,source,kind,optional};
+  }
+  function noteCourse(subject,title,kind="轻量复盘",optional=true){
+    return course(subject,title,null,"",TEXTBOOK_SOURCE,kind,optional);
+  }
+
+  const GAOSHU={
+    m1:[
+      course("高数下","模块一｜【考点1-2】向量的概念、数量和向量积",2035,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块一｜【考点3-4】平面方程直线方程",1953,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块一｜【考点5】空间中位置关系的判断",2133,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块一｜【考点6】曲面及其方程",1444,GAOSHU_URL,"j榜时代")
+    ],
+    m2a:[
+      course("高数下","模块二｜【考点1】多元函数的基本概念【考点2】偏导数",3218,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块二｜【考点3】全微分",1887,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块二｜【考点4】多元复合函数的求导【考点5】隐函数的求导",3369,GAOSHU_URL,"j榜时代")
+    ],
+    m2b:[
+      course("高数下","模块二｜【考点6】多元函数微分学的几何应用",923,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块二｜【考点7】方向导数与梯度",1398,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块二｜【考点8】多元函数的极值及其求法",2325,GAOSHU_URL,"j榜时代")
+    ],
+    m3calc:[
+      course("高数下","模块三｜【考点1】二重积分的计算 题型1-题型3",2063,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块三｜【考点1】二重积分的计算 题型4-题型6",3017,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块三｜【考点1】二重积分的计算 题型7",831,GAOSHU_URL,"j榜时代")
+    ],
+    m3app:[
+      course("高数下","模块三｜【考点2】二重积分的应用 题型1",313,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块三｜【考点2】二重积分的应用 题型2-题型3",582,GAOSHU_URL,"j榜时代")
+    ],
+    m4:[
+      course("高数下","模块四｜【考点1】三重积分的计算 题型1-题型4例1",4121,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块四｜【考点1】三重积分的计算 题型4例2",594,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块四｜【考点2】三重积分的应用",1229,GAOSHU_URL,"j榜时代")
+    ],
+    m5:[
+      course("高数下","模块五｜【考点1】对弧长的曲线积分（第一类曲线积分）的计算",2620,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块五｜【考点2】对坐标的曲线积分（第二类曲线积分）的计算 题型1",1762,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块五｜【考点2】对坐标的曲线积分（第二类曲线积分）的计算 题型2",1131,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块五｜【考点2】对坐标的曲线积分（第二类曲线积分）的计算 题型3-题型4",1890,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块五｜【考点3】曲线积分与路径无关的条件",414,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块五｜【考点4】曲线积分的应用",1713,GAOSHU_URL,"j榜时代")
+    ],
+    m6:[
+      course("高数下","模块六｜【考点1】对面积的曲面积分（第一类曲面积分）的计算 题型1",919,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块六｜【考点1】对面积的曲面积分（第一类曲面积分）的计算 题型2",1331,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块六｜【考点2】对坐标的曲面积分（第二类曲面积分）的计算 题型1",1372,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块六｜【考点2】对坐标的曲面积分（第二类曲面积分）的计算 题型2",1320,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块六｜【考点3】曲面积分的应用【考点4】散度和旋度的计算",1030,GAOSHU_URL,"j榜时代")
+    ],
+    m7:[
+      course("高数下","模块七｜【考点1】题型1 级数的概念与性质",1078,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块七｜【考点1】题型2 正项级数敛散性的判定",2433,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块七｜【考点1】题型3【考点2】幂级数",5210,GAOSHU_URL,"j榜时代"),
+      course("高数下","模块七｜【考点3】傅里叶级数",848,GAOSHU_URL,"j榜时代")
+    ],
+    extra:[course("高数下","补充内容【选听】微分方程【上册没学过这部分内容的同学选修】",1988,GAOSHU_URL,"j榜时代","选听",true)]
+  };
+
+  const LINEAR={
+    det:[course("线代","第一讲 行列式",3226,LINEAR_URL,"j榜时代")],
+    inv:[course("线代","逆矩阵和矩阵方程",3418,LINEAR_URL,"j榜时代")],
+    eq:[course("线代","齐次线性方程组",1953,LINEAR_URL,"j榜时代"),course("线代","非齐次线性方程组",1847,LINEAR_URL,"j榜时代")],
+    vector:[course("线代","向量的线性表示",948,LINEAR_URL,"j榜时代"),course("线代","极大无关组",1134,LINEAR_URL,"j榜时代")],
+    eigen:[course("线代","求特征值特征向量",1495,LINEAR_URL,"j榜时代"),course("线代","相似对角化",2082,LINEAR_URL,"j榜时代"),course("线代","正交替换",1731,LINEAR_URL,"j榜时代"),course("线代","二次型",1401,LINEAR_URL,"j榜时代")],
+    basis:[course("线代","基 维数 坐标",925,LINEAR_URL,"j榜时代")],
+    tips:[
+      course("线代","12 小知识集锦-行列式",1390,LINEAR_URL,"j榜时代"),
+      course("线代","13 小知识集锦-矩阵",3702,LINEAR_URL,"j榜时代"),
+      course("线代","14 小知识集锦-向量组",2069,LINEAR_URL,"j榜时代"),
+      course("线代","15 小知识集锦-线性方程组",3015,LINEAR_URL,"j榜时代"),
+      course("线代","16 小知识集锦-特征值和特征向量的定义、求法及性质",1661,LINEAR_URL,"j榜时代"),
+      course("线代","17 小知识集锦-相似矩阵的定义及性质、可对角化定义及条件",1050,LINEAR_URL,"j榜时代"),
+      course("线代","18 小知识集锦-正交矩阵",814,LINEAR_URL,"j榜时代"),
+      course("线代","19 小知识集锦-二次型及其矩阵",372,LINEAR_URL,"j榜时代"),
+      course("线代","20 小知识集锦-矩阵合同、正定矩阵",2013,LINEAR_URL,"j榜时代")
+    ]
+  };
+
+  const PHYSICS={
+    ch1:[course("大学物理","第1章 运动和力｜课时11 质点运动学",1732,PHYSICS_URL),course("大学物理","第1章 运动和力｜课时12 运动建模及解方程",1420,PHYSICS_URL),course("大学物理","第1章 运动和力｜课时13 牛顿定律和常见力",1050,PHYSICS_URL)],
+    ch2:[course("大学物理","第2章 运动的守恒量和守恒定律｜课时14 转动惯量和力矩及其作用",1828,PHYSICS_URL),course("大学物理","第2章 运动的守恒量和守恒定律｜课时15 动量和动量守恒",2004,PHYSICS_URL),course("大学物理","第2章 运动的守恒量和守恒定律｜课时16 角动量和角动量守恒",1123,PHYSICS_URL),course("大学物理","第2章 运动的守恒量和守恒定律｜课时17 做功和能量守恒",1238,PHYSICS_URL)],
+    ch3:[course("大学物理","第3章 刚体定轴转动｜第4章 刚体定轴转动 核心",2511,PHYSICS_EXTRA_URL),course("大学物理","第3章 刚体定轴转动｜第4章 拓展",1199,PHYSICS_EXTRA_URL),course("大学物理","第3章 刚体定轴转动｜第4章 习题",1839,PHYSICS_EXTRA_URL)],
+    ch4:[course("大学物理","第4章 狭义相对论｜第17章 狭义相对论 核心",3019,PHYSICS_EXTRA_URL),course("大学物理","第4章 狭义相对论｜第17章 拓展",231,PHYSICS_EXTRA_URL),course("大学物理","第4章 狭义相对论｜第17章 习题",1674,PHYSICS_EXTRA_URL)],
+    ch5:[course("大学物理","第5章 气体动理论｜课时22 气体与动力学",1014,PHYSICS_URL),course("大学物理","第5章 气体动理论｜课时23 气体动理论二",1049,PHYSICS_URL)],
+    ch6:[course("大学物理","第6章 热力学基础｜课时24 热力学第一定律",1598,PHYSICS_URL),course("大学物理","第6章 热力学基础｜课时25 热力学第一定律习题课",538,PHYSICS_URL),course("大学物理","第6章 热力学基础｜课时26 热力学第二定律及热循环效率",930,PHYSICS_URL)],
+    ch7:[course("大学物理","第7章 静止电荷的电场｜课时1 电场强度",1438,PHYSICS_URL),course("大学物理","第7章 静止电荷的电场｜课时2 电场通量和高斯定理",1433,PHYSICS_URL),course("大学物理","第7章 静止电荷的电场｜课时3 电势和电势能",1242,PHYSICS_URL),course("大学物理","第7章 静止电荷的电场｜课时4 导体和静电平衡",1562,PHYSICS_URL),course("大学物理","第7章 静止电荷的电场｜课时5 电容器和电解质、电容能量、电场能量",1638,PHYSICS_URL)],
+    ch8:[course("大学物理","第8章 恒定电流的磁场｜课时6 磁场强度安培环路定理",1559,PHYSICS_URL),course("大学物理","第8章 恒定电流的磁场｜课时7 安培力、磁矩、磁力矩",1913,PHYSICS_URL),course("大学物理","第8章 恒定电流的磁场｜课时8 磁通量、感生电动势、磁场高斯定理",1451,PHYSICS_URL),course("大学物理","第8章 恒定电流的磁场｜课时9 动生电动势定稿版本",876,PHYSICS_URL)]
+  };
+
+  function copy(list){ return list.map(item=>({...item})); }
+  function join(...groups){ return groups.flatMap(copy); }
+
+  function hydrateCourseLists(){
+    const byDate=Object.fromEntries((window.CIRCUIT_PLAN||[]).map(day=>[day.date,day]));
+    const assignments={
+      "2026-06-11":join(GAOSHU.m1,LINEAR.det),
+      "2026-06-12":join(GAOSHU.m2a,LINEAR.inv),
+      "2026-06-13":join(GAOSHU.m2b,GAOSHU.m3calc,LINEAR.eq),
+      "2026-06-14":join(GAOSHU.m3app,GAOSHU.m4,[noteCourse("高数上补漏","极限、导数、积分基础（可选）","可选补漏",true)]),
+      "2026-06-15":join(GAOSHU.m5,GAOSHU.m6,LINEAR.vector),
+      "2026-06-16":join(GAOSHU.m7,GAOSHU.extra,LINEAR.eigen),
+      "2026-06-17":join(PHYSICS.ch1,PHYSICS.ch2,LINEAR.basis,LINEAR.tips),
+      "2026-06-18":[noteCourse("高数下","公式表浏览（轻量）"),noteCourse("线代","错题浏览（轻量）")],
+      "2026-06-19":[noteCourse("可选轻量","睡前10分钟公式表/错题本","可选",true)],
+      "2026-06-20":[noteCourse("可选轻量","睡前10分钟公式表/错题本","可选",true)],
+      "2026-06-21":[noteCourse("可选轻量","睡前10分钟公式表/错题本","可选",true)],
+      "2026-06-22":[noteCourse("电路","电路试卷日1","试卷",false),noteCourse("高数下","公式轻复盘（不超过40分钟）","轻量复盘",true)],
+      "2026-06-23":[noteCourse("电路","电路试卷日2","试卷",false),noteCourse("线代","公式轻复盘（不超过40分钟）","轻量复盘",true)],
+      "2026-06-24":[noteCourse("电路","上午电路考试","考试",false),noteCourse("大学物理","第5章 气体动理论轻量切换","教材预习",true)],
+      "2026-06-25":join(PHYSICS.ch5,PHYSICS.ch6,PHYSICS.ch7,[noteCourse("高数下","薄弱模块回看或公式整理","轻量复盘",true)]),
+      "2026-06-26":join(PHYSICS.ch8,[noteCourse("大学物理","试卷日1：做一套试卷","试卷",false),noteCourse("线代","模块五、六回看或公式复盘","轻量复盘",true)]),
+      "2026-06-27":join(PHYSICS.ch3,PHYSICS.ch4,[noteCourse("大学物理","试卷日2 + 订正 + 公式表","试卷",false),noteCourse("高数下","错题和公式轻复盘","轻量复盘",true)]),
+      "2026-06-28":[noteCourse("线代","试卷日1","试卷",false),noteCourse("大学物理","考前公式和错题清单","轻量复盘",true)],
+      "2026-06-29":[noteCourse("线代","试卷日2","试卷",false),noteCourse("大学物理","第1、2、5、6、7、8章公式重点回看","轻量复盘",true)],
+      "2026-06-30":[noteCourse("高数下","高数试卷日1","试卷",false),noteCourse("线代","考前公式和错题模板","轻量复盘",true)],
+      "2026-07-01":[noteCourse("大学物理","上午大学物理考试","考试",false),noteCourse("线代","下午公式复盘 + 晚上线性代数考试","考试",false)],
+      "2026-07-02":[noteCourse("高数下","高数试卷日2 + 考前错题公式","冲刺",false)],
+      "2026-07-03":[noteCourse("高数","上午高等数学考试","考试",false)]
+    };
+    Object.entries(assignments).forEach(([date,courses])=>{
+      if(byDate[date]) byDate[date].courses=courses.map((item,index)=>({...item,id:`${date}-course-${index}`}));
+    });
+  }
+
   function ready(){
     return typeof PLAN !== "undefined" && Array.isArray(PLAN) &&
       typeof LESSON_TITLES !== "undefined" &&
       typeof render === "function" && typeof normalize === "function";
   }
+  function courseKey(date,index){ return `course-${date}-${index}`; }
+  function secondsOfCourse(course){ return Number(course&&course.durationSeconds ? course.durationSeconds : 0); }
+  function dayCourseSeconds(day){ return (day.courses||[]).reduce((sum,course)=>sum+secondsOfCourse(course),0); }
+  function lessonSeconds(no){ return Number(BILI_DURATIONS && BILI_DURATIONS[no] ? BILI_DURATIONS[no] : 0); }
+  function dayLessonSeconds(day){ return (day.lessonNos||[]).reduce((sum,no)=>sum+lessonSeconds(no),0); }
+  function plainDuration(sec){
+    sec=Number(sec||0);
+    const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=Math.floor(sec%60);
+    if(h) return `${h}小时${m}分${s}秒`;
+    return `${m}分${s}秒`;
+  }
+  function courseDurationText(course){
+    const sec=secondsOfCourse(course);
+    return sec?plainDuration(sec):"未录入";
+  }
+  function dayTotalSeconds(day){ return dayLessonSeconds(day)+dayCourseSeconds(day); }
+  function watchedSeconds(data){
+    return PLAN.reduce((sum,day)=>{
+      (day.lessonNos||[]).forEach(no=>{ if(data.videos[lessonId(no)]) sum+=lessonSeconds(no); });
+      (day.courses||[]).forEach((course,index)=>{ if(data.videos[courseKey(day.date,index)]) sum+=secondsOfCourse(course); });
+      return sum;
+    },0);
+  }
+  function allCourseSeconds(){
+    return PLAN.reduce((sum,day)=>sum+dayCourseSeconds(day),0);
+  }
+  function allLessonSeconds(){
+    const seen=new Set();
+    return PLAN.reduce((sum,day)=>{
+      (day.lessonNos||[]).forEach(no=>{
+        if(!seen.has(no)){ seen.add(no); sum+=lessonSeconds(no); }
+      });
+      return sum;
+    },0);
+  }
+
   function apply(){
     if(!ready()) return;
+    hydrateCourseLists();
     document.title="5.31—7.3 期末复习打卡网站";
     const h1=document.querySelector(".hero h1");
     if(h1) h1.textContent="5.31—7.3 期末复习打卡网站";
@@ -1170,31 +1341,47 @@ window.CIRCUIT_PLAN=[
     Object.assign(LESSON_TITLES, window.CIRCUIT_LESSON_TITLES||{});
     PLAN.splice(0, PLAN.length, ...(window.CIRCUIT_PLAN||[]));
 
-    if(typeof courseHtml === "function" && !window.__extendedCourseHtmlApplied){
-      window.__extendedCourseHtmlApplied=true;
-      const originalCourseHtml=courseHtml;
-      courseHtml=function(day){
-        if(day.courses&&day.courses.length){
-          const data=normalize(load());
-          const items=day.courses.map((course,index)=>{
-            const id=`course-${day.date}-${index}`;
-            const done=!!data.videos[id];
-            const optional=course.optional?"｜可选":"";
-            const kind=course.kind||"网课/教材";
-            return `<div class="lesson-item"><div class="lesson-top"><div><div class="lesson-name">${esc(course.subject||"复习")}：${esc(course.title||"")}</div><div class="lesson-meta">${esc(kind)}${optional}｜按当天两门主科安排</div></div><span class="lesson-done ${done?"ok":""}">${done?"已完成":"未完成"}</span></div><div class="lesson-actions"><button type="button" data-open-course="${day.date}|${index}">查看网课/教材</button><button type="button" data-mark-course="${day.date}|${index}">我已看完</button></div></div>`;
-          }).join("");
-          return `<div class="course-box"><div class="course-title">今日网课/教材</div><div class="lesson-list">${items}</div></div>`;
-        }
-        return originalCourseHtml(day);
+    if(!window.__extendedDurationFnsApplied){
+      window.__extendedDurationFnsApplied=true;
+      getDayDurationText=function(day){
+        const sec=dayTotalSeconds(day);
+        if(sec) return plainDuration(sec);
+        if(day.lessonNos&&day.lessonNos.length&&!biliDurationsLoaded) return "读取中";
+        return "0分0秒";
+      };
+      getTotalRealSeconds=function(){ return allLessonSeconds()+allCourseSeconds(); };
+      getRemainingRealSeconds=function(){
+        const data=normalize(load());
+        return Math.max(0,getTotalRealSeconds()-watchedSeconds(data));
+      };
+      refreshRealDurationTexts=function(){
+        document.querySelectorAll("[data-day-duration]").forEach(el=>{
+          const day=PLAN.find(x=>x.date===el.getAttribute("data-day-duration"));
+          if(day) el.textContent="网课："+getDayDurationText(day);
+        });
+        if(els.leftVideo) els.leftVideo.textContent=getTotalRealSeconds()?plainDuration(getRemainingRealSeconds()):"读取中";
       };
     }
 
-    if(typeof getDayDurationText === "function" && !window.__extendedDurationTextApplied){
-      window.__extendedDurationTextApplied=true;
-      const originalGetDayDurationText=getDayDurationText;
-      getDayDurationText=function(day){
-        if(day.courses&&day.courses.length&&!day.lessonNos?.length) return "按当天安排";
-        return originalGetDayDurationText(day);
+    if(typeof courseHtml === "function" && !window.__extendedCourseHtmlApplied){
+      window.__extendedCourseHtmlApplied=true;
+      courseHtml=function(day){
+        const hasLessons=day.lessonNos&&day.lessonNos.length;
+        const hasCourses=day.courses&&day.courses.length;
+        if(!hasLessons&&!hasCourses) return "";
+        const data=normalize(load());
+        const lessonItems=(day.lessonNos||[]).map(no=>{
+          const id=lessonId(no),done=!!data.videos[id],started=data.videoStart[id]?"已开始计时":"未开始";
+          return `<div class="lesson-item"><div class="lesson-top"><div><div class="lesson-name">电路｜课时${String(no).padStart(2,"0")} ${esc(lessonTitle(no))}</div><div class="lesson-meta">时长：${getLessonDurationText(no)}｜bilibili｜${started}｜达到约90%时长可自动打卡</div></div><span class="lesson-done ${done?"ok":""}">${done?"已完成":"未完成"}</span></div><div class="lesson-actions"><button type="button" data-open-lesson="${day.date}|${no}">去B站观看</button><button type="button" data-mark-lesson="${day.date}|${no}">我已看完</button></div></div>`;
+        }).join("");
+        const courseItems=(day.courses||[]).map((course,index)=>{
+          const id=courseKey(day.date,index);
+          const done=!!data.videos[id];
+          const optional=course.optional?"｜可选":"";
+          const source=course.source||"textbook";
+          return `<div class="lesson-item"><div class="lesson-top"><div><div class="lesson-name">${esc(course.subject||"复习")}｜${esc(course.title||"")}</div><div class="lesson-meta">时长：${courseDurationText(course)}｜${esc(source)}${optional}</div></div><span class="lesson-done ${done?"ok":""}">${done?"已完成":"未完成"}</span></div><div class="lesson-actions"><button type="button" data-open-course="${day.date}|${index}">打开网课/教材</button><button type="button" data-mark-course="${day.date}|${index}">我已看完</button></div></div>`;
+        }).join("");
+        return `<div class="course-box"><div class="course-title">今日网课/教材</div><div class="notice">今日网课合计：${getDayDurationText(day)}</div><div class="lesson-list">${lessonItems}${courseItems}</div></div>`;
       };
     }
 
@@ -1216,10 +1403,10 @@ window.CIRCUIT_PLAN=[
           const day=PLAN.find(x=>x.date===date);
           if(!day||!day.courses) return;
           const data=normalize(load());
-          data.videos[`course-${date}-${indexText}`]=true;
-          if(day.courses.every((_,idx)=>data.videos[`course-${date}-${idx}`])&&day.checks&&day.checks.length){
-            data.checks[taskKey(date,0)]=true;
-          }
+          data.videos[courseKey(date,indexText)]=true;
+          const lessonDone=!(day.lessonNos&&day.lessonNos.length)||day.lessonNos.every(no=>data.videos[lessonId(no)]);
+          const courseDone=day.courses.every((_,idx)=>data.videos[courseKey(date,idx)]);
+          if(lessonDone&&courseDone&&day.checks&&day.checks.length) data.checks[taskKey(date,0)]=true;
           save(data);
           render();
         }
