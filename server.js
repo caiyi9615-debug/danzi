@@ -174,10 +174,6 @@ function replaceConstPlan(html) {
 function buildIndexHtml() {
   let html = fs.readFileSync(path.join(__dirname, "public", "index.html"), "utf8");
   html = html
-    .replace("<title>电路原理复习站｜每日复习+健身日程</title>", "<title>5.31—6.10 电路原理邱关源版第1—9章复习打卡网站</title>")
-    .replace("<h1>每日复习 + 健身日程表｜电路原理版</h1>", "<h1>5.31—6.10 电路原理邱关源版第1—9章复习打卡网站</h1>")
-    .replace("目标：每天复习 6—7.5 小时 + 健身减肥 + 午睡 + 晚上休闲 + 23:30睡觉。电路原理按邱关源1—8章安排，蜂考网课只学到课时11，P2讲义领取已自动跳过。", "目标：2026-05-31 到 2026-06-10 复习邱关源《电路原理》第1—9章；每天保持复习、健身、午睡、晚上休闲与 23:30 睡觉，网课自动跳过讲义领取。")
-    .replace("<script>\nconst STORAGE_KEY", "<script src=\"/plan.js\"></script>\n<script>\nconst STORAGE_KEY")
     .replace("const LESSON_TITLES=", "let LESSON_TITLES=")
     .replace("};\n\nconst PLAN=", "};\nif(window.CIRCUIT_LESSON_TITLES&&Object.keys(window.CIRCUIT_LESSON_TITLES).length) LESSON_TITLES=window.CIRCUIT_LESSON_TITLES;\n\nconst PLAN=")
     .replace("正在获取真实时长", "读取中")
