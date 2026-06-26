@@ -75,10 +75,10 @@ const BILI_BVID = "BV1wffvY4EZC";
 
 function mapLessonNoFromPage(pageNumber) {
   // P2 是讲义领取，不算正式课时：
-  // 课时01 -> P1; 课时02 -> P3; 课时03 -> P4 ... 课时11 -> P12
+  // 课时01 -> P1; 课时02 -> P3; 课时03 -> P4 ... 课时13 -> P14
   if (pageNumber === 2) return null;
   if (pageNumber === 1) return 1;
-  if (pageNumber >= 3 && pageNumber <= 12) return pageNumber - 1;
+  if (pageNumber >= 3 && pageNumber <= 14) return pageNumber - 1;
   return null;
 }
 
@@ -110,7 +110,7 @@ app.get("/api/bili/pages", async (req, res) => {
 
     (d.data.pages || []).forEach(p => {
       const lessonNo = mapLessonNoFromPage(Number(p.page));
-      if (!lessonNo || lessonNo > 11) return;
+      if (!lessonNo || lessonNo > 13) return;
       lessonDurations[lessonNo] = Number(p.duration || 0);
       lessonPages[lessonNo] = {
         page: p.page,
