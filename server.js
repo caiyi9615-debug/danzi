@@ -11,6 +11,8 @@ const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 const BILI_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
 let biliPagesCache = null;
 let biliPagesCacheAt = 0;
+let physicsPagesCache = null;
+let physicsPagesCacheAt = 0;
 
 app.use(express.json({ limit: "1mb" }));
 app.use(express.static(path.join(__dirname, "public"), { index: false }));
@@ -137,57 +139,56 @@ app.get("/api/bili/pages", async (req, res) => {
 });
 
 
-function replaceConstPlan(html) {
-  const marker = "const PLAN=";
-  const start = html.indexOf(marker);
-  if (start === -1) return html;
-  const arrayStart = html.indexOf("[", start);
-  if (arrayStart === -1) return html;
-  let depth = 0;
-  let inString = false;
-  let escaped = false;
-  for (let i = arrayStart; i < html.length; i += 1) {
-    const ch = html[i];
-    if (inString) {
-      if (escaped) escaped = false;
-      else if (ch === "\\") escaped = true;
-      else if (ch === '"') inString = false;
-    } else {
-      if (ch === '"') inString = true;
-      else if (ch === "[") depth += 1;
-      else if (ch === "]") {
-        depth -= 1;
-        if (depth === 0) {
-          const semicolon = html.indexOf(";", i);
-          if (semicolon === -1) return html;
-          return html.slice(0, start) +
-            "let PLAN=" + html.slice(arrayStart, semicolon + 1) +
-            "\nif(Array.isArray(window.CIRCUIT_PLAN)&&window.CIRCUIT_PLAN.length) PLAN=window.CIRCUIT_PLAN;" +
-            html.slice(semicolon + 1);
-        }
-      }
+const PHYSICS_BVID = "BV1G4wqz7EpN";
+
+app.get("/api/physics/pages", async (req, res) => {
+  try {
+    if (physicsPagesCache && Date.now() - physicsPagesCacheAt < BILI_CACHE_TTL_MS) {
+      return res.json(physicsPagesCache);
     }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    const url = `https://api.bilibili.com/x/web-interface/view?bvid=${PHYSICS_BVID}`;
+    const r = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        "Referer": `https://www.bilibili.com/video/${PHYSICS_BVID}/`
+      }
+    });
+    clearTimeout(timeout);
+    const d = await r.json();
+
+    if (!r.ok || d.code !== 0) {
+      throw new Error(d.message || "B站接口返回异常");
+    }
+
+    const pages = (d.data.pages || []).map(p => ({
+      page: Number(p.page),
+      part: p.part,
+      cid: p.cid,
+      duration: Number(p.duration || 0),
+      url: `https://www.bilibili.com/video/${PHYSICS_BVID}?p=${Number(p.page)}`
+    }));
+
+    physicsPagesCache = {
+      success: true,
+      bvid: PHYSICS_BVID,
+      title: d.data.title,
+      pages
+    };
+    physicsPagesCacheAt = Date.now();
+    res.json(physicsPagesCache);
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: e.name === "AbortError" ? "获取大学物理B站分P信息超时" : (e.message || "获取大学物理B站分P信息失败")
+    });
   }
-  return html;
-}
+});
 
-function buildIndexHtml() {
-  let html = fs.readFileSync(path.join(__dirname, "public", "index.html"), "utf8");
-  html = html
-    .replace("const LESSON_TITLES=", "let LESSON_TITLES=")
-    .replace("};\n\nconst PLAN=", "};\nif(window.CIRCUIT_LESSON_TITLES&&Object.keys(window.CIRCUIT_LESSON_TITLES).length) LESSON_TITLES=window.CIRCUIT_LESSON_TITLES;\n\nconst PLAN=")
-    .replace("正在获取真实时长", "读取中")
-    .replace("<div class=\"lesson-meta\">${getLessonDurationText(no)}｜", "<div class=\"lesson-meta\">真实时长：${getLessonDurationText(no)}｜")
-    .replace(">打开课程</button>", ">去B站观看</button>")
-    .replace(">标记完成</button>", ">我已看完</button>")
-    .replace("<div class=\"course-title\">网课安排</div>", "<div class=\"course-title\">今日网课</div>");
-  return replaceConstPlan(html);
-}
 
-function sendIndex(req, res) {
-  res.type("html").send(buildIndexHtml());
-}
-
-app.get("/", sendIndex);
-app.get("*", sendIndex);
+app.get("/", (req, res) => res.sendFile(path.join(__dirname, "public", "index.html")));
+app.get("*", (req, res) => res.sendFile(path.join(__dirname, "public", "index.html")));
 app.listen(PORT, () => console.log("circuit daily schedule site running on " + PORT));

@@ -393,7 +393,7 @@ function timeGridHtml(day){
   return `<div class="time-block"><b>上午 8:30—11:30</b><br>${esc(day.morning)}</div><div class="time-block"><b>下午 13:50—15:20</b><br>${esc(day.afternoon)}</div><div class="time-block"><b>晚上 19:00—20:20</b><br>${esc(day.night1)}</div><div class="time-block"><b>晚上 20:35—21:35</b><br>${esc(day.night2)}</div>`;
 }
 function fitnessSectionHtml(day){
-  if(day.fitness===false) return `<div class="section-title">健身打卡</div><div class="fitness-card"><b>健身安排：</b>本冲刺计划不单独安排健身；短暂喝水、上厕所等休息包含在学习时间段内。</div>`;
+  if(day.fitness===false) return `<div class="section-title">健身打卡</div><div class="fitness-card"><b>健身安排：</b>本冲刺计划不单独安排健身；吃饭、洗漱和休息不计入24小时学习时间。</div>`;
   return `<div class="section-title">健身打卡</div><div class="fitness-card"><b>健身安排：</b>15:20—17:20 健身 + 路程；力量训练按三分化走，结束后爬坡有氧：坡度12、速度4、约30分钟。</div>`;
 }
 function render(){
@@ -694,6 +694,6 @@ render();
 fetchRealDurations();
 setInterval(()=>{checkAutoVideoDone();updateStats();},60000);
 </script>
-<script src="/plan.js?v=physics-cram-20260627-v2"></script>
+<script src="/physics-plan.js?v=new-bili-physics-20260627"></script>
 </body>
 </html>
