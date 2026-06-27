@@ -10,6 +10,8 @@ const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 const BILI_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
 let biliPagesCache = null;
 let biliPagesCacheAt = 0;
+let physicsPagesCache = null;
+let physicsPagesCacheAt = 0;
 
 app.use(express.json({ limit: "1mb" }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -75,10 +77,10 @@ const BILI_BVID = "BV1wffvY4EZC";
 
 function mapLessonNoFromPage(pageNumber) {
   // P2 是讲义领取，不算正式课时：
-  // 课时01 -> P1; 课时02 -> P3; 课时03 -> P4 ... 课时11 -> P12
+  // 课时01 -> P1; 课时02 -> P3; 课时03 -> P4 ... 课时13 -> P14
   if (pageNumber === 2) return null;
   if (pageNumber === 1) return 1;
-  if (pageNumber >= 3 && pageNumber <= 12) return pageNumber - 1;
+  if (pageNumber >= 3 && pageNumber <= 14) return pageNumber - 1;
   return null;
 }
 
@@ -110,7 +112,7 @@ app.get("/api/bili/pages", async (req, res) => {
 
     (d.data.pages || []).forEach(p => {
       const lessonNo = mapLessonNoFromPage(Number(p.page));
-      if (!lessonNo || lessonNo > 11) return;
+      if (!lessonNo || lessonNo > 13) return;
       lessonDurations[lessonNo] = Number(p.duration || 0);
       lessonPages[lessonNo] = {
         page: p.page,
@@ -131,6 +133,56 @@ app.get("/api/bili/pages", async (req, res) => {
     res.status(500).json({
       success: false,
       message: e.name === "AbortError" ? "获取B站分P信息超时" : (e.message || "获取B站分P信息失败")
+    });
+  }
+});
+
+
+const PHYSICS_BVID = "BV1G4wqz7EpN";
+
+app.get("/api/physics/pages", async (req, res) => {
+  try {
+    if (physicsPagesCache && Date.now() - physicsPagesCacheAt < BILI_CACHE_TTL_MS) {
+      return res.json(physicsPagesCache);
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    const url = `https://api.bilibili.com/x/web-interface/view?bvid=${PHYSICS_BVID}`;
+    const r = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        "Referer": `https://www.bilibili.com/video/${PHYSICS_BVID}/`
+      }
+    });
+    clearTimeout(timeout);
+    const d = await r.json();
+
+    if (!r.ok || d.code !== 0) {
+      throw new Error(d.message || "B站接口返回异常");
+    }
+
+    const pages = (d.data.pages || []).map(p => ({
+      page: Number(p.page),
+      part: p.part,
+      cid: p.cid,
+      duration: Number(p.duration || 0),
+      url: `https://www.bilibili.com/video/${PHYSICS_BVID}?p=${Number(p.page)}`
+    }));
+
+    physicsPagesCache = {
+      success: true,
+      bvid: PHYSICS_BVID,
+      title: d.data.title,
+      pages
+    };
+    physicsPagesCacheAt = Date.now();
+    res.json(physicsPagesCache);
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: e.name === "AbortError" ? "获取大学物理B站分P信息超时" : (e.message || "获取大学物理B站分P信息失败")
     });
   }
 });
