@@ -336,6 +336,16 @@ function taskControlsHtml(task,day){
   const idValue=task.type==="custom"?task.id:task.index;
   return `<div class="task-actions"><button type="button" data-edit-task="${day.date}|${task.type}|${idValue}">修改</button><button type="button" data-delete-task="${day.date}|${task.type}|${idValue}">删除</button></div>`;
 }
+function timeGridHtml(day){
+  if(Array.isArray(day.timeBlocks)&&day.timeBlocks.length){
+    return day.timeBlocks.map(block=>`<div class="time-block"><b>${esc(block.label)}</b><br>${esc(block.detail)}</div>`).join("");
+  }
+  return `<div class="time-block"><b>上午 8:30—11:30</b><br>${esc(day.morning)}</div><div class="time-block"><b>下午 13:50—15:20</b><br>${esc(day.afternoon)}</div><div class="time-block"><b>晚上 19:00—20:20</b><br>${esc(day.night1)}</div><div class="time-block"><b>晚上 20:35—21:35</b><br>${esc(day.night2)}</div>`;
+}
+function fitnessSectionHtml(day){
+  if(day.fitness===false) return `<div class="section-title">健身打卡</div><div class="fitness-card"><b>健身安排：</b>本冲刺计划不单独安排健身；吃饭、洗漱和休息不计入24小时学习时间。</div>`;
+  return `<div class="section-title">健身打卡</div><div class="fitness-card"><b>健身安排：</b>15:20—17:20 健身 + 路程；力量训练按三分化走，结束后爬坡有氧：坡度12、速度4、约30分钟。</div>`;
+}
 function render(){
   checkAutoVideoDone();
   const data=normalize(load());
@@ -348,7 +358,7 @@ function render(){
     card.id="day-"+day.date;
     const tasks=getDayTasks(day,data);
     const checkHtml=tasks.map(task=>`<div class="check ${task.kind==="fitness"?"fitness-check":""}"><input type="checkbox" data-key="${task.key}" ${data.checks[task.key]?"checked":""}><span class="check-title">${esc(task.label)}</span>${taskControlsHtml(task,day)}</div>`).join("");
-    card.innerHTML=`<div class="day-date-panel"><div class="date">${esc(day.show)}</div><div class="weekday">${weekday(day.date)}｜${esc(day.date)}</div><span class="type ${esc(day.cls)}">${esc(day.type)}</span><div class="meta"><span class="pill">${esc(day.priority)}</span><span class="pill" data-day-duration="${day.date}">网课：${getDayDurationText(day)}</span></div></div><div class="day-main"><h2>${esc(day.chapter)}</h2><div class="section-title">今日任务</div><div class="task"><b>今日主线：</b>${esc(day.task)}</div><div class="task"><b>练习/整理：</b>${esc(day.practice)}</div><div class="section-title">学习安排</div><div class="time-grid"><div class="time-block"><b>上午 8:30—11:30</b><br>${esc(day.morning)}</div><div class="time-block"><b>下午 13:50—15:20</b><br>${esc(day.afternoon)}</div><div class="time-block"><b>晚上 19:00—20:20</b><br>${esc(day.night1)}</div><div class="time-block"><b>晚上 20:35—21:35</b><br>${esc(day.night2)}</div></div><div class="section-title">健身打卡</div><div class="fitness-card"><b>健身安排：</b>15:20—17:20 健身 + 路程；力量训练按三分化走，结束后爬坡有氧：坡度12、速度4、约30分钟。</div><div class="adjust"><b>落后调整：</b>${esc(day.adjust)}</div><div class="adjust"><b>21:35—22:00 今日回顾：</b>${esc(day.review)}</div>${courseHtml(day)}</div><div class="day-check-panel"><div class="check-panel-title"><span>学习进度</span><span>${done?"已完成":"待打卡"}</span></div><div class="checks">${checkHtml}</div><div class="add-task-box"><div class="section-title">补充任务</div><div class="add-task-row"><select data-new-task-kind="${day.date}"><option value="study">学习任务</option><option value="fitness">健身任务</option></select><input data-new-task="${day.date}" placeholder="给这一天添加临时任务"><button type="button" data-add-task="${day.date}">添加任务</button></div></div><textarea data-note="${day.date}" placeholder="写今天的错题、没听懂的点、明天要补的内容……">${esc(data.notes[day.date]||"")}</textarea></div>`;
+    card.innerHTML=`<div class="day-date-panel"><div class="date">${esc(day.show)}</div><div class="weekday">${weekday(day.date)}｜${esc(day.date)}</div><span class="type ${esc(day.cls)}">${esc(day.type)}</span><div class="meta"><span class="pill">${esc(day.priority)}</span><span class="pill" data-day-duration="${day.date}">网课：${getDayDurationText(day)}</span></div></div><div class="day-main"><h2>${esc(day.chapter)}</h2><div class="section-title">今日任务</div><div class="task"><b>今日主线：</b>${esc(day.task)}</div><div class="task"><b>练习/整理：</b>${esc(day.practice)}</div><div class="section-title">学习安排</div><div class="time-grid">${timeGridHtml(day)}</div>${fitnessSectionHtml(day)}<div class="adjust"><b>落后调整：</b>${esc(day.adjust)}</div><div class="adjust"><b>${esc(day.reviewLabel||"21:35—22:00 今日回顾")}：</b>${esc(day.review)}</div>${courseHtml(day)}</div><div class="day-check-panel"><div class="check-panel-title"><span>学习进度</span><span>${done?"已完成":"待打卡"}</span></div><div class="checks">${checkHtml}</div><div class="add-task-box"><div class="section-title">补充任务</div><div class="add-task-row"><select data-new-task-kind="${day.date}"><option value="study">学习任务</option><option value="fitness">健身任务</option></select><input data-new-task="${day.date}" placeholder="给这一天添加临时任务"><button type="button" data-add-task="${day.date}">添加任务</button></div></div><textarea data-note="${day.date}" placeholder="写今天的错题、没听懂的点、明天要补的内容……">${esc(data.notes[day.date]||"")}</textarea></div>`;
     els.dayList.appendChild(card);
   });
   bindDynamicEvents();
@@ -597,5 +607,6 @@ render();
 fetchRealDurations();
 setInterval(()=>{checkAutoVideoDone();updateStats();},60000);
 </script>
+<script src="/physics-plan.js?v=new-bili-physics-20260627"></script>
 </body>
 </html>
